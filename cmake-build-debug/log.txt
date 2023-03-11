@@ -1,0 +1,3 @@
+Jugador:ert, Puntos:0
+Jugador:tyu, Puntos:0
+Jugador:mnb, Puntos:0
