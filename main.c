@@ -7,11 +7,16 @@
 
 
 
+
+
 int main() {
     //variables
     int terminar = 0;//Finalizar juego
     int nJugadores = 0;//total de jugadores
     int fichasXjugador=0;//numero de fichas para cada jugador
+    char *fgets(char *str, int num, FILE *stream);
+    pthread_mutex_t turno_mutex;//variable para aplicar hilos sincronos
+    pthread_mutex_init(&turno_mutex, NULL); // inicializa el mutex
 
     //lista de jugadores
     ListaJugador *listaJugadores;
@@ -66,10 +71,14 @@ int main() {
 
         printf("Ingrese el nombre del jugador #%d\n", (i+1));
         gets(nombreJugador);
+
+//        fgets(nombreJugador, sizeof(nombreJugador), stdin);
+//        nombreJugador[strcspn(nombreJugador, "\n")] = '\0';
+
         printf("Se añade al jugador: %s\n", nombreJugador);
 
         //almacenar en lista de jugadores
-        NodoJugador *nodoJugador = crearJugador(nombreJugador, 0);
+        NodoJugador *nodoJugador = crearJugador(nombreJugador, i);
         insertarJugador(listaJugadores, nodoJugador);
 
         printf("\n");
@@ -94,30 +103,34 @@ int main() {
     //inicializa hilos
     int errorHilo;
 
-    for(int i = 0; i < nJugadores; i++) {
 
-        printf("\nCreando hilo jugador %ld\n", (i+1));
-        errorHilo = pthread_create(&hilosJugadores[i], NULL, turnoJugador(nJugadores), (void *)i);
+    // recorrer lista de jugadores
+    int indice = 0;
+    NodoJugador *aux = listaJugadores->primero;
+    while (aux != NULL){
+
+        printf("\n\nCreando hilo jugador %i\n", (indice+1));
+
+        errorHilo = pthread_create(&hilosJugadores[indice], NULL, turnoJugador,(void *)aux);
 
         if(errorHilo) {
             printf("ERROR: retorno del código %d desde pthread_create()\n", errorHilo);
             exit(-1);
+        }else{
+
+            //iniciar la ejecucion del hilo
+            pthread_join(hilosJugadores[indice], NULL);
         }
+
+        indice++;
+
+        aux = aux->sig;
     }
 
-    // Ejecutar hilos
-    for(int i = 0; i < nJugadores; i++) {
-        errorHilo = pthread_join(hilosJugadores[i], NULL);
-
-        if(errorHilo) {
-            printf("ERROR: retorno del código %d desde pthread_join()\n", errorHilo);
-            exit(-1);
-        }
-    }
-
-    //establecer el orden de juego
 
 
+
+    pthread_mutex_destroy(&turno_mutex); // detruye el mutex
     pthread_exit(NULL);// destruye los hilos
 
     return 0;
