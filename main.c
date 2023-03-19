@@ -3,6 +3,8 @@
 #include "Listas/ListaJugador.h"
 #include "Listas/ListaFichas.h"
 #include "Negocio/LogicaJuego.h"
+#include <pthread.h>
+
 
 
 int main() {
@@ -48,6 +50,9 @@ int main() {
     //repartirFichas(listaMaso, (nJugadores+1));
     //repartirFichas(listaMaso, fichasXjugador, listaMaso);
 
+    //array de hilos
+    pthread_t hilosJugadores[nJugadores];
+
     //crear archivo log.txt
     crearArchivo();
 
@@ -86,6 +91,34 @@ int main() {
     printf("Lista del mazo a comer: ");
     mostrarMazoComer(listaMaso);
 
+    //inicializa hilos
+    int errorHilo;
+
+    for(int i = 0; i < nJugadores; i++) {
+
+        printf("\nCreando hilo jugador %ld\n", (i+1));
+        errorHilo = pthread_create(&hilosJugadores[i], NULL, turnoJugador(nJugadores), (void *)i);
+
+        if(errorHilo) {
+            printf("ERROR: retorno del código %d desde pthread_create()\n", errorHilo);
+            exit(-1);
+        }
+    }
+
+    // Ejecutar hilos
+    for(int i = 0; i < nJugadores; i++) {
+        errorHilo = pthread_join(hilosJugadores[i], NULL);
+
+        if(errorHilo) {
+            printf("ERROR: retorno del código %d desde pthread_join()\n", errorHilo);
+            exit(-1);
+        }
+    }
+
+    //establecer el orden de juego
+
+
+    pthread_exit(NULL);// destruye los hilos
 
     return 0;
 }

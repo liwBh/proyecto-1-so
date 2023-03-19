@@ -12,6 +12,7 @@
 typedef struct NodoJugador{
     char nombre[50]; //Nombre de los jugadores dentro del nodo
     int puntos; //Contiene los puntos de los jugadores
+    int nTurno;
     //crear maso de fichas
     ListaFichas *listaFichasJugador;
     struct NodoJugador *sig; //Puntero siguiente
@@ -22,6 +23,7 @@ NodoJugador *crearJugador(char nombre[50],int puntos){ //Inicializo las variable
     NodoJugador *jugador = malloc(sizeof(NodoJugador));
     strcpy(jugador->nombre, nombre);
     jugador->listaFichasJugador = crearLista();
+    jugador->nTurno = 0;
     jugador->puntos = puntos;
     jugador->sig = NULL;
     jugador->ant = NULL;

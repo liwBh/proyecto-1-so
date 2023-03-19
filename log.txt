@@ -1,2 +1,2 @@
-Jugador:Jurguen, Puntos:0
-Jugador:Wil, Puntos:0
+Jugador:wil, Puntos:0
+Jugador:elmer, Puntos:0
