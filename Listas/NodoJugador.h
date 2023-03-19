@@ -10,29 +10,33 @@
 #include <stdio.h>
 #include <string.h>
 typedef struct NodoJugador{
-    char nombre[50];
-    int puntos;
+    char nombre[50]; //Nombre de los jugadores dentro del nodo
+    int puntos; //Contiene los puntos de los jugadores
     //crear maso de fichas
     ListaFichas *listaFichasJugador;
-
-    struct NodoJugador *sig;
-    struct NodoJugador *ant;
+    struct NodoJugador *sig; //Puntero siguiente
+    struct NodoJugador *ant; //Puntero anterior
 }NodoJugador;
 
-NodoJugador *crearJugador(char nombre[50],int puntos){
+NodoJugador *crearJugador(char nombre[50],int puntos){ //Inicializo las variables
     NodoJugador *jugador = malloc(sizeof(NodoJugador));
     strcpy(jugador->nombre, nombre);
     jugador->listaFichasJugador = crearLista();
-
     jugador->puntos = puntos;
     jugador->sig = NULL;
     jugador->ant = NULL;
-
     return jugador;
 }
 
-void mostrarJugadores(NodoJugador *jugador){
-    printf("Nombre: %s, Puntos: %d\n",jugador->nombre,jugador->puntos);
+void mostrarJugadores(NodoJugador *jugador){ //Muestra los jugadores
+    printf("Nombre: %s \nPuntos: %d \n",jugador->nombre,jugador->puntos);
+    printf("Fichas del jugador: ");
+    nodoFicha *aux = jugador->listaFichasJugador->primero;
+    while(aux != NULL){
+        mostrarFicha(aux);
+        aux = aux->siguiente;
+    }
+    printf("\n\n");
 }
 
 #endif //CLIONPROJECTS_NODOJUGADOR_H

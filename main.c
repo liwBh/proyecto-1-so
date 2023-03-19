@@ -76,17 +76,15 @@ int main() {
         printf("\n\n");
     }
 
-    //imprimir fichas de un jugador
-    imprimir(listaMaso );
-
+    metodoBurbujaMazoJugador(listaJugadores);
     //imprimir la lista de jugadores
     printf("Los participantes son: \n");
     mostrar(listaJugadores);
 
 
-
-
-
+    //Imprimir la lista de mazo para comer
+    printf("Lista del mazo a comer: ");
+    mostrarMazoComer(listaMaso);
 
 
     return 0;

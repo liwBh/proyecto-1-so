@@ -82,12 +82,7 @@ void desordenar(ListaFichas *lista) {
     }
 }
 
-void primerNodo(ListaFichas *lista){
-    mostrarFicha(lista->primero);
-}
-
 void agregarUnaFicha(ListaFichas *lista, nodoFicha *nodo){
-    mostrarFicha(nodo);
     insertar(lista,nodo);
 }
 
@@ -97,37 +92,17 @@ void repartirFichas(ListaFichas *lista, int fichasXjugador, ListaFichas *fichasJ
     nodoFicha *aux = lista->primero;
 
     while ( (i < fichasXjugador) ){
-
         //añadir fichas a la mano del jugador
         agregarUnaFicha(fichasJugador, aux);
-
-        //eliminar la ficha del maso
-        //eliminarUna(lista, aux);
-
-        //printf("ficha #%d", i);
         aux = aux->siguiente;
         i++;
     }
 
+    //Elimina las fichas que se van repartiendo
     nodoFicha *aux2 = aux->anterior;
     aux2->siguiente = NULL;
     aux->anterior = NULL;
     lista->primero = aux;
-
-
-}
-
-//Tengo problemas en este metodo
-void eliminarFichas(ListaFichas *lista, int n){
-    nodoFicha *aux = lista->primero;
-    nodoFicha *aux1 = NULL;
-    int x=0;
-    while(x<3){
-        aux1 = aux;
-        aux = aux->siguiente;
-        aux1->siguiente = NULL;
-        x++;
-    }
 }
 
 void imprimir(ListaFichas *lista){ //imprime la lista
@@ -147,6 +122,14 @@ void imprimir(ListaFichas *lista){ //imprime la lista
         indice++;
     }
     printf("\n");
+}
+
+void mostrarMazoComer(ListaFichas *lista){
+    nodoFicha *aux = lista->primero;
+    while(aux != NULL){
+        mostrarFicha(aux);
+        aux = aux->siguiente;
+    }
 }
 
 #endif //PRUEBAS_LISTAFICHAS_H
