@@ -35,12 +35,78 @@ void *turnoJugador(void* parametro) {
     return NULL;
 }*/
 
-void *turnoJugador(void* parametro) {
+/*
+typedef struct parametrosHilo{
+    pthread_mutex_t turno_mutex;
+    NodoJugador *nodoJugador;
+    int nJugadores;
+} parametrosHilo;
+*/
 
-    NodoJugador *nodoJugador = (NodoJugador *) parametro;
+typedef struct ParametrosTurno{
+    NodoJugador* nodoJugador;
+    int nJugadores;
+    pthread_mutex_t turno_mutex;
+}ParametrosTurno;
+
+/*
+void iniciarParametros (pthread_mutex_t turno_mutex, NodoJugador *nodoJugador,int nJugadores ){
+
+    pthread_mutex_t turno_mutex = turno_mutex;
+    NodoJugador *nodoJugador = nodoJugador;
+    int nJugadores = nJugadores;
+
+    parametrosHilo;
+}
+*/
+
+//void turnoJugador(void parametro) {
+//    ParametrosTurno* parametros = (ParametrosTurno*) parametro;
+//    NodoJugador* nodoJugador = parametros->nodoJugador;
+//    int nJugadores = parametros->nJugadores;
+//    int nRondas = parametros->nRondas;
+//
+//    // Resto del código de la función
+//}
+// Para llamar la función y pasar los parámetros:
+//ParametrosTurno parametros = {nodoJugador, 2, 3};
+//pthread_create(&hiloJugador, NULL, turnoJugador, (void*) &parametros);
+
+void *turnoJugador(void *parametro) {
+
+    ParametrosTurno *parametros = (ParametrosTurno*) parametro;
+    NodoJugador *nodoJugador = (NodoJugador *) parametros->nodoJugador;
     //printf("El nombre del jugador en el turno es: %s\n",nodoJugador->nombre);
 
-    
+   // printf("El nombre del jugador en el turno es: %s\n",nodoJugador->nombre);
+
+    int jugadorActual = 0;
+    int nRondas = 3;
+
+
+    long tid = (long)pthread_self(); // corrección
+
+    srand(time(NULL) + tid); // semilla diferente para cada hilo
+
+    for(int i = 0; i < nRondas; i++) {//ciclo de juego
+
+        pthread_mutex_lock(&parametros->turno_mutex); // bloquea el mutex para obtener el turno
+//        pthread_self() != parametros->jugadores[jugadorActual]
+        while(tid != jugadorActual) { // espera a que sea el turno del jugador
+            pthread_mutex_unlock(&parametros->turno_mutex); // libera el mutex mientras espera
+            pthread_mutex_lock(&parametros->turno_mutex); // vuelve a bloquear el mutex para obtener el turn0
+        }
+
+        //acciones del jugador
+
+        printf("El nombre del jugador es: %s\n",nodoJugador->nombre);
+        printf("El turno del jugador es: %i\n", (i+1));
+
+
+        jugadorActual = (jugadorActual + 1) % parametros->nJugadores; // pasa el turno al siguiente jugador
+
+        pthread_mutex_unlock(&parametros->turno_mutex); // libera el mutex para el siguiente jugador
+    }
 
 
 

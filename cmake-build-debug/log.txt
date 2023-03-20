@@ -1,2 +1,2 @@
-Jugador:qwe, Puntos:0
-Jugador:cvb, Puntos:0
+Jugador:frito, Puntos:0
+Jugador:coto, Puntos:0

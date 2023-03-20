@@ -19,11 +19,11 @@ typedef struct NodoJugador{
     struct NodoJugador *ant; //Puntero anterior
 }NodoJugador;
 
-NodoJugador *crearJugador(char nombre[50],int puntos){ //Inicializo las variables
+NodoJugador *crearJugador(char nombre[50],int puntos, int nTurno){ //Inicializo las variables
     NodoJugador *jugador = malloc(sizeof(NodoJugador));
     strcpy(jugador->nombre, nombre);
     jugador->listaFichasJugador = crearLista();
-    jugador->nTurno = 0;
+    jugador->nTurno = nTurno;
     jugador->puntos = puntos;
     jugador->sig = NULL;
     jugador->ant = NULL;
@@ -31,7 +31,7 @@ NodoJugador *crearJugador(char nombre[50],int puntos){ //Inicializo las variable
 }
 
 void mostrarJugadores(NodoJugador *jugador){ //Muestra los jugadores
-    printf("Nombre: %s \nPuntos: %d \n",jugador->nombre,jugador->puntos);
+    printf("Nombre: %s \nPuntos: %d \nNumero de turno: %d\n",jugador->nombre,jugador->puntos, jugador->nTurno);
     printf("Fichas del jugador: ");
     nodoFicha *aux = jugador->listaFichasJugador->primero;
     while(aux != NULL){
