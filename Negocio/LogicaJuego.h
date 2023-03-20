@@ -6,34 +6,40 @@
 #include <pthread.h>
 #include <string.h>
 #include <time.h>
-
+#include <ctype.h>
 
 
 int  calcularFichasXjugador( int nJugadores){
    return 28/ (nJugadores+1);
 }
 
-/*void *turnoJugador(void* parametro) {
+int validarNJugadores(char input[50] ){
 
-    int *valor_parametro = (int *) parametro;
+    int entradaValida = 0;
 
-    printf("\n\n Entro! Hilo %i",  *valor_parametro);
+    for (int i = 0; input[i] != '\0'; i++) {
 
-}*/
+        //validar si todoslos caracteres son numericos
+        if (!isdigit(input[i])) {
+            entradaValida = 0;
+            break;
+        }else {
+            entradaValida = 1;
+        }
+    }
 
-/*
-void *turnoJugador(void* parametro) {
+    if (entradaValida != 0) {
+        //convertir a numerico
+        entradaValida = atoi(input);
 
-    //sacar el nodo de parametros
-    // int *nJugadores = (int *) parametro;
-    NodoJugador *nodoJugador = (NodoJugador *) parametro;
+        if ((entradaValida<2) || (entradaValida>7) ){
+            entradaValida = 0;
+        }
+    }
 
-    char nombre[50] = "";
-    strcpy(nombre,nodoJugador->nombre);
+    return entradaValida;
+}
 
-    printf("El nombre del jugador en el turno es: %s\n", nombre);
-    return NULL;
-}*/
 
 /*
 typedef struct parametrosHilo{
@@ -60,17 +66,6 @@ void iniciarParametros (pthread_mutex_t turno_mutex, NodoJugador *nodoJugador,in
 }
 */
 
-//void turnoJugador(void parametro) {
-//    ParametrosTurno* parametros = (ParametrosTurno*) parametro;
-//    NodoJugador* nodoJugador = parametros->nodoJugador;
-//    int nJugadores = parametros->nJugadores;
-//    int nRondas = parametros->nRondas;
-//
-//    // Resto del código de la función
-//}
-// Para llamar la función y pasar los parámetros:
-//ParametrosTurno parametros = {nodoJugador, 2, 3};
-//pthread_create(&hiloJugador, NULL, turnoJugador, (void*) &parametros);
 
 void *turnoJugador(void *parametro) {
 
@@ -115,45 +110,7 @@ void *turnoJugador(void *parametro) {
 
 
 
-/*
 
-void *turnoJugador( void* parametro ) {
-    int *turno_mutex = (pthread_mutex_t *) parametro;
-
-    int *nJugadores = (int *) parametro;
-
-    printf("entro!");
-
-    int jugadorActual = 0;
-    int nRondas = 3;
-
-
-    void *threadid;
-    long tid = (long)threadid;
-    srand(time(NULL) + tid); // semilla diferente para cada hilo
-
-    for(int i = 0; i < nRondas; i++) {//ciclo de juego
-
-        pthread_mutex_lock(&turno_mutex); // bloquea el mutex para obtener el turno
-
-        while(tid != jugadorActual) { // espera a que sea el turno del jugador
-            pthread_mutex_unlock(&turno_mutex); // libera el mutex mientras espera
-            pthread_mutex_lock(&turno_mutex); // vuelve a bloquear el mutex para obtener el turn0
-        }
-
-
-        int num = rand() % 100 + 1; // número aleatorio entre 1 y 100
-        printf("Jugador %ld: turno %d, número aleatorio: %d\n", tid, (i+1), num);
-
-        jugadorActual = (jugadorActual + 1) % *nJugadores; // pasa el turno al siguiente jugador
-
-        pthread_mutex_unlock(&turno_mutex); // libera el mutex para el siguiente jugador
-    }
-
-
-    pthread_exit(NULL);
-}
-*/
 
 
 

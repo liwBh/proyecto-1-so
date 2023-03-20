@@ -24,6 +24,7 @@ int main() {
     char *fgets(char *str, int num, FILE *stream);
     pthread_mutex_init(&turno_mutex, NULL); // inicializa el mutex
     pthread_mutex_lock(&turno_mutex);//bloquear ejecucion de hilos
+    int validarEntrada = 0;
 
     //lista de jugadores
     ListaJugador *listaJugadores;
@@ -38,7 +39,6 @@ int main() {
     //Mensaje de bienvenida
     printf("\nBienvenido al juego Dominó Sistemas Operativos 2023\n\n");
 
-
     //mostrar el maso
     printf("\n Mostrando el maso de fichas\n");
     imprimir(listaMaso);
@@ -49,12 +49,16 @@ int main() {
     imprimir(listaMaso);
 
     //Solicitar numero jugadores
-    while ( (nJugadores<2) || (nJugadores>7)){
+    do{
+        char entrada[50];
         printf("\nIngrese el numero de jugadores entre un rango de 2 a 7:\n");
-        scanf("%d", &nJugadores);
-        //2fflush(stdin);
+        fgets(entrada, 50, stdin);
+        entrada[strcspn(entrada, "\n")] = '\0';
 
-    };
+        //validar numero
+        nJugadores = validarNJugadores(entrada);
+
+    }while ( nJugadores == 0);
 
     printf("Iniciando partida para %d Jugadores.\n", nJugadores);
 
@@ -63,12 +67,11 @@ int main() {
 
     //array de hilos
     pthread_t hilosJugadores[nJugadores];
-    //pthread_t *hilosJugadores = (pthread_t *) malloc(nJugadores * sizeof(pthread_t));
 
     //crear archivo log.txt
     crearArchivo();
 
-    getchar();//????
+   // getchar();//????
 
     //Ingresar nombres de jugadores
     for(int i = 0; i < nJugadores; i++){
@@ -78,7 +81,6 @@ int main() {
 
         printf("Ingrese el nombre del jugador #%d\n", (i+1));
         //gets(nombreJugador);
-
         fgets(nombreJugador, sizeof(nombreJugador), stdin);
         nombreJugador[strcspn(nombreJugador, "\n")] = '\0';
 
@@ -88,16 +90,18 @@ int main() {
         NodoJugador *nodoJugador = crearJugador(nombreJugador, 0, (i+1));
         insertarJugador(listaJugadores, nodoJugador);
 
-        printf("\n");
         //escribir el nombre y puntaje en un archivo
         acertarPuntos(nombreJugador, 0);
+        printf("\n");
 
         //repartir fichas a jugador
         repartirFichas(listaMaso, fichasXjugador, nodoJugador->listaFichasJugador);
         printf("\n\n");
     }
 
+    //????
     metodoBurbujaMazoJugador(listaJugadores);
+
     //imprimir la lista de jugadores
     printf("Los participantes son: \n");
     mostrar(listaJugadores);
@@ -107,23 +111,28 @@ int main() {
     printf("Lista del mazo a comer: ");
     mostrarMazoComer(listaMaso);
 
+    //*******************************************
+    //validar el numero de fichas pares
+    //CODIGO AQUI
 
 
-    //inicializa hilos
-    int errorHilo;
-    // recorrer lista de jugadores
-    int indice = 0;
 
+
+    // Asignar el orden de turno a cada jugador, segun fichas pares
+    //CODIGO AQUI
+
+
+    int errorHilo;// Variable para manejo de error en hilos
+    int indice = 0; // indice para array de hilos
+
+    //crear hilos
     NodoJugador *aux = listaJugadores->primero;
     printf("\n\n");
     while (aux != NULL){
 
         printf("Creando hilo jugador %i\n", (indice+1));
-
         //struct ParametrosTurno parametrosTurno = {aux, nJugadores, turno_mutex};
-        //errorHilo = pthread_create(&hilosJugadores[indice], NULL, turnoJugador,(void *)aux);
         //errorHilo = pthread_create(&hilosJugadores[indice], NULL, turnoJugador, (void *) &parametrosTurno);
-        //errorHilo = pthread_create(&hilosJugadores[indice], NULL, funcion_hilo, (void *) &aux);
 
         pthread_create(&hilosJugadores[indice], NULL, turno_jugador, (void *)aux);
 
@@ -132,14 +141,15 @@ int main() {
             exit(-1);
         }
 
+        //pasar al siguiente nodo/hilo
         indice++;
-
         aux = aux->sig;
     }
-    printf("\n\n");
 
+    printf("\n\n");
     errorHilo = 0;
 
+    //iniciar ejecucion de los hilos
     pthread_mutex_unlock(&turno_mutex); // libera el mutex mientras espera
     for(int i = 0; i < nJugadores; i++) {
         errorHilo = pthread_join(hilosJugadores[i], NULL);
@@ -150,8 +160,7 @@ int main() {
         }
     }
 
-
-
+    
     printf("Los hilos han terminado\n");
     pthread_mutex_destroy(&turno_mutex); // detruye el mutex
     pthread_exit(NULL);// destruye los hilos
