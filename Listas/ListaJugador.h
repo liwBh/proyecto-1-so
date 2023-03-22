@@ -84,7 +84,7 @@ int validarDobles(ListaJugador *listaJugador){
             nodoFicha1 = nodoFicha1->siguiente;
         }
 
-        if(indice >= 3){
+        if(indice >= 4){
             printf("\n\nEl jugador %s tiene 4 o mas pares, numero de pares: %d\n", nodo->nombre, indice);
             return 1;
         }
@@ -103,61 +103,125 @@ void mostrar(ListaJugador *lista){ //imprime la lista
     }
 }
 
-nodoFicha *obtenerFichaDoble(ListaJugador lista){
-    NodoJugador *aux = lista.primero;
-    nodoFicha *alta;
-    alta = crearFicha(0,0);
-    while (aux != NULL){
-        nodoFicha *aux2 = aux->listaFichasJugador->primero;
-        while (aux2 != NULL) {
-            if(aux2->a == aux2->b && aux2->a > alta->a){
-                alta->a = aux2->a;
-                alta->b = aux2->b;
-            }
-            aux2 = aux2->siguiente;
-        }
-        aux = aux->sig;
-    }
-    return alta;
-}
+void *asignarTurno(ListaJugador listaJugador,  nodoFicha *fichaMasAlta, int nTurno ){
 
+    //printf("\n\n\nLa ficha mas alta es [%d|%d] ",fichaMasAlta->a,fichaMasAlta->b);
 
-/*
-void escogerJugador(ListaJugador listaJugador){
+    //encontro al jugador
+    int flag = 0;
+
+    //recorrer lista de jugadores
     NodoJugador *recorreJugadores = listaJugador.primero;
     while(recorreJugadores != NULL){
-        nodoFicha *recorreFichas = recorreJugadores
-        while () {
 
+        //si no tiene turno asignado
+        if( recorreJugadores->nTurno == 0 ){
+
+            //recorremos la lista de fichas
+            nodoFicha *recorreFichas = recorreJugadores->listaFichasJugador->primero;
+            while (recorreFichas != NULL ) {
+
+                //buscar ficha igual a mas alta
+                if( fichaMasAlta->a == recorreFichas->a && fichaMasAlta->b == recorreFichas->b){
+                    //asignar tuno al jugador
+                    recorreJugadores->nTurno = nTurno;
+                    flag = 1;
+                    //salir del ciclo
+                    break;
+                }
+
+                //pasar a la siguente ficha
+                recorreFichas = recorreFichas->siguiente;
+            }
         }
+
+        //ya encontro al jugador, salir del ciclo
+        if( flag == 1){
+            break;
+        }
+
+        //pasar al siguente jugador
         recorreJugadores = recorreJugadores->sig;
     }
 }
 
-// Función para obtener la ficha doble más alta de una lista doble
-struct ficha obtener_ficha_doble_mas_alta(struct nodo *inicio) {
-    struct ficha ficha_mas_alta = {0, 0};
-    struct nodo *actual = inicio;
-    while (actual != NULL) {
-        if (actual->f.a == actual->f.b && actual->f.a > ficha_mas_alta.a) {
-            ficha_mas_alta = actual->f;
+void *obtenerFichaDoble(ListaJugador lista,int nJugadores) {
+
+    //contador de turnos repartidos
+    int contadorTurno = 1;
+
+    //asgnarle un turno a cada jugador
+    for (int i = 0; i < nJugadores; ++i) {
+        //nodo temporal con la ficha mas alta
+        nodoFicha *alta;
+        alta = crearFicha(0,0);
+
+        //bandera, si algun jugador tiene
+        int flagHayPar = 0;
+
+        //recorre la lista jugadores
+        NodoJugador *aux = lista.primero;
+
+        while (aux != NULL){
+
+            //printf("\n\n\n Entrooo!");
+            //badera si tiene par
+            int flag = 0;
+
+            if( aux->nTurno == 0 ){//si el jugador no tiene turno asignado
+
+                //recorre lista de fichas de jugador
+                nodoFicha *aux2 = aux->listaFichasJugador->primero;
+                while (aux2 != NULL) {
+
+                    //si la ficha es par Y el par es mas alto
+                    if(aux2->a == aux2->b){
+                        //tiene par
+                        flag = 1;
+                        flagHayPar = 1;
+
+                        //busca la ficha par mas alta
+                        if(aux2->a > alta->a){
+                            alta->a = aux2->a;
+                            alta->b = aux2->b;
+                        }
+
+                    }else if(flag == 0 && flagHayPar == 0){//si no tiene par
+
+                        //buscar la ficha mas alta
+                        if( (aux2->a + aux2->b ) > (alta->a + alta->b ) ){
+                            alta->a = aux2->a;
+                            alta->b = aux2->b;
+                        }
+
+                    }
+
+                    //pasar a la siguente ficha
+                    aux2 = aux2->siguiente;
+                }
+
+            }
+
+            //pasar al siguente jugador
+            aux = aux->sig;
+
+            //llegar al ultimo jugador, seteo el numero nturno al jugador
+            if(aux == NULL){
+                // cual jugador tiene la ficha mas alta y asignarle el numero de turno
+                asignarTurno(lista, alta, contadorTurno);
+                printf("\n\n\nLa ficha mas alta es [%d|%d] ",alta->a,alta->b);
+                printf("\n\n\nSi habia par = %i en la ronda %i,  ",flagHayPar, contadorTurno);
+
+                //resetar nodo
+                alta = crearFicha(0,0);
+
+                //pasar al siguient turno
+                contadorTurno++;
+            }
         }
-        actual = actual->sig;
     }
-    return ficha_mas_alta;
+
 }
 
-// Función para escoger qué lista juega primero, basándose en la ficha doble más alta
-int escoger_lista(struct nodo *domino_1, struct nodo *domino_2) {
-    struct ficha ficha_doble_mas_alta_1 = obtener_ficha_doble_mas_alta(domino_1);
-    struct ficha ficha_doble_mas_alta_2 = obtener_ficha_doble_mas_alta(domino_2);
-    if (ficha_doble_mas_alta_1.a > ficha_doble_mas_alta_2.a) {
-        return 1;
-    } else if (ficha_doble_mas_alta_2.a > ficha_doble_mas_alta_1.a) {
-        return 2;
-    } else {
-        return 0;
-    }
-}*/
 
 #endif //CLIONPROJECTS_LISTAJUGADOR_H

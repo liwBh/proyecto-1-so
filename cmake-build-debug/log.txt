@@ -1,2 +1,6 @@
-Jugador:we, Puntos:0
-Jugador:xcv, Puntos:0
+Jugador:tttt, Puntos:0
+Jugador:gggg, Puntos:0
+Jugador:uuuuu, Puntos:0
+Jugador:mmmmm, Puntos:0
+Jugador:ooooo, Puntos:0
+Jugador:tttttttt, Puntos:0

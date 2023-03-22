@@ -84,7 +84,8 @@ int main() {
         printf("Se añade al jugador: %s\n", nombreJugador);
 
         //almacenar en lista de jugadores
-        NodoJugador *nodoJugador = crearJugador(nombreJugador, 0, (i+1));
+        //NodoJugador *nodoJugador = crearJugador(nombreJugador, 0, (i+1));
+        NodoJugador *nodoJugador = crearJugador(nombreJugador, 0, 0);
         insertarJugador(listaJugadores, nodoJugador);
 
         //escribir el nombre y puntaje en un archivo
@@ -128,10 +129,6 @@ int main() {
             printf("\nRepartiendo fichas de nuevo...\n");
             sleep(2);
 
-//            printf("\nRevolviendo el maso de fichas... ...\n");
-//            sleep(2);
-//            printf("\nRevolviendo el maso de fichas... ... ...\n");
-
             //repartir las fichas de nuevo
             NodoJugador *aux = listaJugadores->primero;
             while(aux != NULL){
@@ -160,6 +157,17 @@ int main() {
     // Asignar el orden de turno a cada jugador, segun fichas pares
     //CODIGO AQUI
 
+    //el jugador con la par mas alto
+    obtenerFichaDoble(*listaJugadores, nJugadores);
+
+    printf("\n\n\n");
+    //imprimir la lista de jugadores
+    printf("Los participantes son: \n");
+    mostrar(listaJugadores);
+
+
+    //**************************+ Arreglar los Hilos !!!!!!!!!!!!!!
+    exit(0);
 
     int errorHilo;// Variable para manejo de error en hilos
     int indice = 0; // indice para array de hilos
@@ -240,7 +248,6 @@ void *turno_jugador(void *parametro) {
 
         // Esperar un poco antes de continuar con el siguiente turno
         usleep(2000000);
-
 
        printf("turno: %d , njugadores: %d \n", turno_actual, nJugadores);
        //aumentar la ronda
