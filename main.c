@@ -6,12 +6,11 @@
 #include <pthread.h>
 #include <unistd.h>
 
-
 void *turno_jugador(void *parametro);
 
 pthread_mutex_t turno_mutex;// hilos sincronos
 int turno_actual = 1;// control del turno de los hilos
-int numeroRondas = 0;// Control de rondas
+int numeroRondas = 1;// Control de rondas
 int nJugadores;// total de jugadores
 
 int main() {
@@ -71,8 +70,6 @@ int main() {
     //crear archivo log.txt
     crearArchivo();
 
-   // getchar();//????
-
     //Ingresar nombres de jugadores
     for(int i = 0; i < nJugadores; i++){
 
@@ -96,10 +93,11 @@ int main() {
 
         //repartir fichas a jugador
         repartirFichas(listaMaso, fichasXjugador, nodoJugador->listaFichasJugador);
-        printf("\n\n");
+        //printf("\n\n");
     }
 
-    //????
+    //********************************
+    //ordenar lista de fichas de los jugadores
     metodoBurbujaMazoJugador(listaJugadores);
 
     //imprimir la lista de jugadores
@@ -111,11 +109,52 @@ int main() {
     printf("Lista del mazo a comer: ");
     mostrarMazoComer(listaMaso);
 
+
+
     //*******************************************
     //validar el numero de fichas pares
-    //CODIGO AQUI
+
+    if( validarDobles(listaJugadores) ){
+        do{
+            printf("\n\nRevolviendo el maso de fichas ...");
+            sleep(3);
+
+            // reiniciar la lista de maso
+            listaMaso = crearLista();
+            insertarFichas(listaMaso);
+
+            //desordenar las fichas
+            desordenar(listaMaso);
+            printf("\nRepartiendo fichas de nuevo...\n");
+            sleep(2);
+
+//            printf("\nRevolviendo el maso de fichas... ...\n");
+//            sleep(2);
+//            printf("\nRevolviendo el maso de fichas... ... ...\n");
+
+            //repartir las fichas de nuevo
+            NodoJugador *aux = listaJugadores->primero;
+            while(aux != NULL){
+                aux->listaFichasJugador = crearLista();
+                repartirFichas(listaMaso, fichasXjugador, aux->listaFichasJugador);
+                aux = aux->sig;
+            }
+
+        }while( validarDobles(listaJugadores) != 0);
+
+        //********************************
+        //ordenar lista de fichas de los jugadores
+        metodoBurbujaMazoJugador(listaJugadores);
+
+        //imprimir la lista de jugadores
+        printf("\n\nLos participantes son: \n");
+        mostrar(listaJugadores);
 
 
+        //Imprimir la lista de mazo para comer
+        printf("Lista del mazo a comer: ");
+        mostrarMazoComer(listaMaso);
+    }
 
 
     // Asignar el orden de turno a cada jugador, segun fichas pares
@@ -162,11 +201,21 @@ int main() {
 
     
     printf("Los hilos han terminado\n");
+    //free(&hilosJugadores);
+
+
+    for (int i = 0; i < nJugadores; i++) {
+        //pthread_detach(hilosJugadores[i]);
+        pthread_exit(&hilosJugadores[i] );
+    }
+
     pthread_mutex_destroy(&turno_mutex); // detruye el mutex
     pthread_exit(NULL);// destruye los hilos
 
     return 0;
 }
+
+
 
 void *turno_jugador(void *parametro) {
 
@@ -175,12 +224,12 @@ void *turno_jugador(void *parametro) {
     int terminar = 1;
     // Realizar el turno
 
-    while (terminar != 0) {
+   do {
 
         // Esperar a que sea el turno del jugador
         pthread_mutex_lock(&turno_mutex);
 
-        while (nodoJugador->nTurno != turno_actual) {
+        while (nodoJugador->nTurno != turno_actual && terminar != 0) {
             pthread_mutex_unlock(&turno_mutex);
             sched_yield();
             pthread_mutex_lock(&turno_mutex);
@@ -188,27 +237,31 @@ void *turno_jugador(void *parametro) {
 
         //si todos jugaron su ronda se reinicia el contador de ronda
         printf("Turno del jugador %s (turno=%d)\n", nodoJugador->nombre, nodoJugador->nTurno);
+
         // Esperar un poco antes de continuar con el siguiente turno
         usleep(2000000);
 
-        // Pasar al siguiente jugador
+
+       printf("turno: %d , njugadores: %d \n", turno_actual, nJugadores);
+       //aumentar la ronda
+       if(turno_actual == nJugadores){
+           printf("Se ejecuto la ronda: %d\n", numeroRondas);
+           numeroRondas++;
+       }
+
+       // Pasar al siguiente jugador
         turno_actual = (turno_actual % nJugadores) + 1;
         pthread_mutex_unlock(&turno_mutex);
 
-        //aumentar la ronda
-        if(turno_actual == turno_actual){
-            numeroRondas++;
-            //printf("Se ejecuto la ronda: %d\n", numeroRondas);
-        }
-
         //condicion de terminar
         if(numeroRondas > 2){
+            pthread_mutex_lock(&turno_mutex);
             terminar=0;
-           // printf("\nEl juego termino!\n");
+            printf("\nEl juego termino!\n");
         }
 
-    }
+    } while (terminar != 0);
 
-
+    exit(0);
     pthread_exit(NULL);// destruye los hilos
 }

@@ -67,20 +67,32 @@ void metodoBurbujaMazoJugador(ListaJugador *listaJugador){
 
 //Valido cuantas dobles tiene cada jugador, pero problemas en el main
 int validarDobles(ListaJugador *listaJugador){
+
+
+    //recorre la lista de jugadores
     NodoJugador *nodo = listaJugador->primero;
-    int indice=0;
     while (nodo != NULL) {
+
+        //recorro la lista de fichas de cada jugador
         nodoFicha *nodoFicha1 = nodo->listaFichasJugador->primero;
+        int indice=0;
+
         while (nodoFicha1 != NULL){
             if(nodoFicha1->a == nodoFicha1->b){
                 indice++;
-                printf("%d",indice);
             }
             nodoFicha1 = nodoFicha1->siguiente;
         }
+
+        if(indice >= 3){
+            printf("\n\nEl jugador %s tiene 4 o mas pares, numero de pares: %d\n", nodo->nombre, indice);
+            return 1;
+        }
+
         nodo = nodo->sig;
+
     }
-    return indice;
+    return 0;
 }
 
 void mostrar(ListaJugador *lista){ //imprime la lista
@@ -108,6 +120,8 @@ nodoFicha *obtenerFichaDoble(ListaJugador lista){
     }
     return alta;
 }
+
+
 /*
 void escogerJugador(ListaJugador listaJugador){
     NodoJugador *recorreJugadores = listaJugador.primero;
