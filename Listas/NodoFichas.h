@@ -9,18 +9,18 @@
 #include <stdio.h>
 
 //La estructura de las fichas
-typedef struct nodoFicha{
+typedef struct NodoFicha{
     int a;//extremo a
     int b;//extremo b
-    struct nodoFicha *siguiente;
-    struct nodoFicha *anterior;
-}nodoFicha;
+    struct NodoFicha *siguiente;
+    struct NodoFicha *anterior;
+}NodoFicha;
 
 //Metodos de las fichas
 
 //Constructor
-nodoFicha *crearFicha(int a, int b){
-    nodoFicha *ficha = malloc(sizeof(nodoFicha));
+NodoFicha *crearFicha(int a, int b){
+    NodoFicha *ficha = malloc(sizeof(NodoFicha));
     ficha->a=a;
     ficha->b=b;
     ficha->siguiente = NULL;
@@ -30,7 +30,7 @@ nodoFicha *crearFicha(int a, int b){
 
 
 //toString ficha
-void mostrarFicha(nodoFicha *ficha){
+void mostrarFicha(NodoFicha *ficha){
     printf("[%d|%d] ",ficha->a,ficha->b);
 }
 

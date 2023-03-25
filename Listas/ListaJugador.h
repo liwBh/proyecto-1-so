@@ -44,9 +44,9 @@ void insertarJugador(ListaJugador *lista, NodoJugador *nodo){ //Metodo de inserc
 void metodoBurbujaMazoJugador(ListaJugador *listaJugador){
     NodoJugador *nodoJugador = listaJugador->primero; //Nodo que apunta al primero de la lista de jugadores
     while(nodoJugador != NULL){ //Ciclo para recorrer la lista de jugadores
-        nodoFicha *nodoActual = nodoJugador->listaFichasJugador->primero; //Nodo que apunta al primero de la lista de fichas que tiene cada jugador
+        NodoFicha *nodoActual = nodoJugador->listaFichasJugador->primero; //Nodo que apunta al primero de la lista de fichas que tiene cada jugador
         while (nodoActual != NULL){ //Ciclo para recorrer la lista de las fichas de cada jugador
-            nodoFicha *nodoSiguiente = nodoActual->siguiente; //Un nodo que va adelante del primero de referencia
+            NodoFicha *nodoSiguiente = nodoActual->siguiente; //Un nodo que va adelante del primero de referencia
             while (nodoSiguiente != NULL){ //Empiezo a recorrer el nodo que va adelante
                 if (nodoSiguiente->a < nodoActual->a || (nodoSiguiente->a == nodoActual->a && nodoSiguiente->b < nodoActual->b)) { //Posibles opciones de poder intercambiar
                     // Intercambiar los datos de los nodos
@@ -74,7 +74,7 @@ int validarDobles(ListaJugador *listaJugador){
     while (nodo != NULL) {
 
         //recorro la lista de fichas de cada jugador
-        nodoFicha *nodoFicha1 = nodo->listaFichasJugador->primero;
+        NodoFicha *nodoFicha1 = nodo->listaFichasJugador->primero;
         int indice=0;
 
         while (nodoFicha1 != NULL){
@@ -103,10 +103,9 @@ void mostrar(ListaJugador *lista){ //imprime la lista
     }
 }
 
-void *asignarTurno(ListaJugador listaJugador,  nodoFicha *fichaMasAlta, int nTurno ){
+void *asignarTurno(ListaJugador listaJugador, NodoFicha *fichaMasAlta, int nTurno ){
 
     //printf("\n\n\nLa ficha mas alta es [%d|%d] ",fichaMasAlta->a,fichaMasAlta->b);
-
     //encontro al jugador
     int flag = 0;
 
@@ -118,7 +117,7 @@ void *asignarTurno(ListaJugador listaJugador,  nodoFicha *fichaMasAlta, int nTur
         if( recorreJugadores->nTurno == 0 ){
 
             //recorremos la lista de fichas
-            nodoFicha *recorreFichas = recorreJugadores->listaFichasJugador->primero;
+            NodoFicha *recorreFichas = recorreJugadores->listaFichasJugador->primero;
             while (recorreFichas != NULL ) {
 
                 //buscar ficha igual a mas alta
@@ -153,7 +152,7 @@ void *obtenerFichaDoble(ListaJugador lista,int nJugadores) {
     //asgnarle un turno a cada jugador
     for (int i = 0; i < nJugadores; ++i) {
         //nodo temporal con la ficha mas alta
-        nodoFicha *alta;
+        NodoFicha *alta;
         alta = crearFicha(0,0);
 
         //bandera, si algun jugador tiene
@@ -171,7 +170,7 @@ void *obtenerFichaDoble(ListaJugador lista,int nJugadores) {
             if( aux->nTurno == 0 ){//si el jugador no tiene turno asignado
 
                 //recorre lista de fichas de jugador
-                nodoFicha *aux2 = aux->listaFichasJugador->primero;
+                NodoFicha *aux2 = aux->listaFichasJugador->primero;
                 while (aux2 != NULL) {
 
                     //si la ficha es par Y el par es mas alto
@@ -209,8 +208,8 @@ void *obtenerFichaDoble(ListaJugador lista,int nJugadores) {
             if(aux == NULL){
                 // cual jugador tiene la ficha mas alta y asignarle el numero de turno
                 asignarTurno(lista, alta, contadorTurno);
-                printf("\n\n\nLa ficha mas alta es [%d|%d] ",alta->a,alta->b);
-                printf("\n\n\nSi habia par = %i en la ronda %i,  ",flagHayPar, contadorTurno);
+               // printf("\n\n\nLa ficha mas alta es [%d|%d] ",alta->a,alta->b);
+               // printf("\n\n\nSi habia par = %i en la ronda %i,  ",flagHayPar, contadorTurno);
 
                 //resetar nodo
                 alta = crearFicha(0,0);

@@ -33,7 +33,7 @@ NodoJugador *crearJugador(char nombre[50],int puntos, int nTurno){ //Inicializo 
 void mostrarJugadores(NodoJugador *jugador){ //Muestra los jugadores
     printf("Nombre: %s \nPuntos: %d \nNumero de turno: %d\n",jugador->nombre,jugador->puntos, jugador->nTurno);
     printf("Fichas del jugador: ");
-    nodoFicha *aux = jugador->listaFichasJugador->primero;
+    NodoFicha *aux = jugador->listaFichasJugador->primero;
     while(aux != NULL){
         mostrarFicha(aux);
         aux = aux->siguiente;

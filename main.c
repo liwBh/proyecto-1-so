@@ -3,6 +3,8 @@
 #include "Listas/ListaJugador.h"
 #include "Listas/ListaFichas.h"
 #include "Negocio/LogicaJuego.h"
+#include "Listas//ListaMesa.h"
+#include "Listas//ListaPosibles.h"
 #include <pthread.h>
 #include <unistd.h>
 
@@ -12,6 +14,8 @@ pthread_mutex_t turno_mutex;// hilos sincronos
 int turno_actual = 1;// control del turno de los hilos
 int numeroRondas = 1;// Control de rondas
 int nJugadores;// total de jugadores
+ListaMesa *listaMesa;
+
 
 int main() {
     //variables
@@ -34,6 +38,9 @@ int main() {
     ListaFichas *listaMaso;
     listaMaso = crearLista();
     insertarFichas(listaMaso);
+
+    //Lista de Mesa - lista de extremos
+    listaMesa = crearListaMesa();
 
     //Mensaje de bienvenida
     printf("\nBienvenido al juego Dominó Sistemas Operativos 2023\n\n");
@@ -165,9 +172,7 @@ int main() {
     printf("Los participantes son: \n");
     mostrar(listaJugadores);
 
-
     //**************************+ Arreglar los Hilos !!!!!!!!!!!!!!
-    exit(0);
 
     int errorHilo;// Variable para manejo de error en hilos
     int indice = 0; // indice para array de hilos
@@ -243,6 +248,30 @@ void *turno_jugador(void *parametro) {
             pthread_mutex_lock(&turno_mutex);
         }
 
+        //******** temporal
+        if(turno_actual == 1 && isVacia(listaMesa)){
+            printf("\nPrimera jugada!\n");
+            jugarTurno( listaMesa, nodoJugador);
+            mostrarListaMesa(listaMesa);
+            printf("\n");
+            imprimir(nodoJugador->listaFichasJugador);
+        }
+
+        if(turno_actual == 2 && nodoJugador->nTurno != 1){
+            ListaPosibles *listaPosibles = crearListaPosibles();
+
+            printf("\nSegunda jugada!\n");
+
+            llenarListaPosibles(listaPosibles,listaMesa,nodoJugador->listaFichasJugador);
+
+            printf("\n\n Lista de posibles juegos: ");
+            mostrarListaPosibles(listaPosibles);
+
+            exit(0);
+        }
+
+
+
         //si todos jugaron su ronda se reinicia el contador de ronda
         printf("Turno del jugador %s (turno=%d)\n", nodoJugador->nombre, nodoJugador->nTurno);
 
@@ -265,10 +294,17 @@ void *turno_jugador(void *parametro) {
             pthread_mutex_lock(&turno_mutex);
             terminar=0;
             printf("\nEl juego termino!\n");
+            pthread_mutex_unlock(&turno_mutex);
+
+           // pthread_cancel();
+
+            pthread_exit(0);
+
+            return NULL;
         }
 
     } while (terminar != 0);
 
-    exit(0);
+    //exit(0);
     pthread_exit(NULL);// destruye los hilos
 }

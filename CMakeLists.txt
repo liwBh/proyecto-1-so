@@ -4,4 +4,4 @@ project(Proyecto_01_SO C)
 set(CMAKE_C_STANDARD 11)
 
 
-add_executable(Proyecto_01_SO main.c Archivos/Archivo.h Negocio/LogicaJuego.h)
+add_executable(Proyecto_01_SO main.c Archivos/Archivo.h Negocio/LogicaJuego.h Listas/ListaMesa.h Listas/NodoMesa.h Listas/ListaPosibles.h Listas/NodoPosibles.h)

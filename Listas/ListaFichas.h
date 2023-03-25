@@ -10,8 +10,8 @@
 #include <stdlib.h>
 
 typedef struct ListaFichas{
-    struct nodoFicha *primero;
-    struct nodoFicha *ultimo;
+    struct NodoFicha *primero;
+    struct NodoFicha *ultimo;
 }ListaFichas;
 
 ListaFichas *crearLista(){
@@ -29,7 +29,7 @@ int estaVacia(ListaFichas *lista){
     }
 }
 
-void insertar(ListaFichas *lista, nodoFicha *nodo){
+void insertar(ListaFichas *lista, NodoFicha *nodo){
     if(estaVacia(lista)){
         lista->primero = nodo;
         lista->ultimo = nodo;
@@ -41,7 +41,7 @@ void insertar(ListaFichas *lista, nodoFicha *nodo){
 }
 
 void insertarFichas(ListaFichas *lista){
-    nodoFicha *nodo;
+    NodoFicha *nodo;
     for(int i = 0; i <= 6; i++) {
         nodo = crearFicha(i,i);
         insertar(lista,nodo);
@@ -54,7 +54,7 @@ void insertarFichas(ListaFichas *lista){
 
 void desordenar(ListaFichas *lista) {
     int n = 0;
-    nodoFicha *aux = lista->ultimo; // Se empieza desde el último nodo
+    NodoFicha *aux = lista->ultimo; // Se empieza desde el último nodo
     while (aux != NULL) {
         n++; // Se cuenta la cantidad de nodos
         aux = aux->anterior;
@@ -65,7 +65,7 @@ void desordenar(ListaFichas *lista) {
     aux = lista->ultimo;
     while (aux != NULL) {
         int k = rand() % n; // Se genera un número aleatorio entre 0 y n-1
-        nodoFicha *auxK = lista->primero;
+        NodoFicha *auxK = lista->primero;
         for (int i = 0; i < k; i++) {
             auxK = auxK->siguiente; // Se busca el nodo en la posición k
         }
@@ -82,14 +82,14 @@ void desordenar(ListaFichas *lista) {
     }
 }
 
-void agregarUnaFicha(ListaFichas *lista, nodoFicha *nodo){
+void agregarUnaFicha(ListaFichas *lista, NodoFicha *nodo){
     insertar(lista,nodo);
 }
 
 void repartirFichas(ListaFichas *lista, int fichasXjugador, ListaFichas *fichasJugador) {
 
     int i = 0;
-    nodoFicha *aux = lista->primero;
+    NodoFicha *aux = lista->primero;
 
     while ( (i < fichasXjugador) ){
         //añadir fichas a la mano del jugador
@@ -99,7 +99,7 @@ void repartirFichas(ListaFichas *lista, int fichasXjugador, ListaFichas *fichasJ
     }
 
     //Elimina las fichas que se van repartiendo
-    nodoFicha *aux2 = aux->anterior;
+    NodoFicha *aux2 = aux->anterior;
     aux2->siguiente = NULL;
     aux->anterior = NULL;
     lista->primero = aux;
@@ -109,7 +109,7 @@ void imprimir(ListaFichas *lista){ //imprime la lista
 
     int indice = 1;
 
-    nodoFicha *aux = lista->primero; //se crea un nodo aux para recorrer la lista
+    NodoFicha *aux = lista->primero; //se crea un nodo aux para recorrer la lista
     while(aux!=NULL) { //Mientras sea diferente de null me recorre la lista
         if(indice==5){
             printf("\n");
@@ -125,10 +125,51 @@ void imprimir(ListaFichas *lista){ //imprime la lista
 }
 
 void mostrarMazoComer(ListaFichas *lista){
-    nodoFicha *aux = lista->primero;
+    NodoFicha *aux = lista->primero;
     while(aux != NULL){
         mostrarFicha(aux);
         aux = aux->siguiente;
+    }
+}
+
+//busca la ficha doble mas alta
+NodoFicha *buscarFichaDoble(ListaFichas listaFichas) {
+
+    //recorre lista de fichas de jugador
+    NodoFicha *aux = listaFichas.primero;
+
+    //nodo temporal con la ficha mas alta
+    NodoFicha *alta;
+    alta = crearFicha(0, 0);
+
+    while (aux != NULL) {
+
+        //si la ficha es par Y el par es mas alto
+        if ((aux->a == aux->b) && (aux->a > alta->a)) {
+            //busca la ficha par mas alta
+            alta->a = aux->a;
+            alta->b = aux->b;
+        }
+
+
+        //pasar a la siguente ficha
+        aux = aux->siguiente;
+    }
+
+    return alta;
+}
+
+void eliminarFichaJugada(ListaFichas *lista, NodoFicha *nodoEliminar){
+
+    NodoFicha *aux1 = lista->primero;
+    NodoFicha *aux2 = crearFicha(nodoEliminar->a,nodoEliminar->b);
+    while (aux1 != NULL){
+        if((aux2->a == aux1->a && aux2->b  == aux1->b) && (aux1->a == lista->ultimo->a && aux1->b == lista->ultimo->b)) {
+            lista->ultimo = aux1->anterior;
+            aux1->anterior->siguiente = NULL;
+            aux1->anterior = NULL;
+        }
+        aux1 = aux1->siguiente;
     }
 }
 

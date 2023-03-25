@@ -79,6 +79,18 @@
 		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Archivos/Archivo.h">
 			<Option target="Proyecto_01_SO"/>
 		</Unit>
+		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Listas/ListaMesa.h">
+			<Option target="Proyecto_01_SO"/>
+		</Unit>
+		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Listas/ListaPosibles.h">
+			<Option target="Proyecto_01_SO"/>
+		</Unit>
+		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Listas/NodoMesa.h">
+			<Option target="Proyecto_01_SO"/>
+		</Unit>
+		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Listas/NodoPosibles.h">
+			<Option target="Proyecto_01_SO"/>
+		</Unit>
 		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/LogicaJuego.h">
 			<Option target="Proyecto_01_SO"/>
 		</Unit>
