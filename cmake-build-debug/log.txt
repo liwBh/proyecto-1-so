@@ -1,2 +1,3 @@
-Jugador:aaa, Puntos:0
-Jugador:bbb, Puntos:0
+Jugador:aaaa, Puntos:0
+Jugador:bbbb, Puntos:0
+Jugador:cccc, Puntos:0

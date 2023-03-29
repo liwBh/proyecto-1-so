@@ -23,7 +23,7 @@ int crearArchivo(){
     }
 
     //mensaje de exito
-    printf("El archivo a sido creado con exito!\n\n");
+    printf("\nEl archivo a sido creado con exito!\n\n");
 
     //cerrar el archivo
     fclose(archivo);

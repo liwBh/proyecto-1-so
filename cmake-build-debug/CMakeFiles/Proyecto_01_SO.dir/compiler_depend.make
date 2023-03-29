@@ -96,8 +96,11 @@ CMakeFiles/Proyecto_01_SO.dir/main.c.o: /home/liwbh/CLionProjects/Proyecto-01-SO
   /usr/include/x86_64-linux-gnu/bits/confname.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
-  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h
+  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h
 
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h:
 
 /usr/include/x86_64-linux-gnu/bits/getopt_core.h:
 

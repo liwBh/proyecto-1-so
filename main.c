@@ -7,43 +7,87 @@
 #include "Listas//ListaPosibles.h"
 #include <pthread.h>
 #include <unistd.h>
+#include <stdbool.h>
 
+
+//variables
+int turnoActual = 0;// control del turno de los hilos
+int numeroRonda = 0;// Control de rondas
+int nJugadores=0;// total de jugadores
+int fichasXjugador=0;//numero de fichas para cada jugador
+bool estadoJuego = true; //bandera que va sostener el estado del juego
+pthread_t *hilosJugadores;//hilos cada jugador
+pthread_t administrador; //hilo maestro que inicia el juego
+
+ListaJugador *listaJugadores;//lista de jugadores
+ListaMesa *listaMesa;//lista de extremos disponibles para jugar
+ListaFichas *listaMaso;//crear maso de fichas
+
+
+//funciones
 void *turno_jugador(void *parametro);
 
-pthread_mutex_t turno_mutex;// hilos sincronos
-int turno_actual = 1;// control del turno de los hilos
-int numeroRondas = 1;// Control de rondas
-int nJugadores;// total de jugadores
-ListaMesa *listaMesa;
+
+void crearListas();
+void iniciarMazo();
+void ingresarNumeroJugadores();
+void iniciarJugadores();
+void validarNumeroPares();
+void ordenarMostrarFichasJugador();
+void asignarOrdenJuego();
+
+void ponerFicha();
+void *empezarTurno(void * args);
+void *empezarJuego(void *args);
 
 
 int main() {
-    //variables
-   // int nJugadores = 0;//total de jugadores
-    //pthread_mutex_t turno_mutex;//variable para aplicar hilos sincronos
 
-    nJugadores = 0;
-    int fichasXjugador=0;//numero de fichas para cada jugador
-    char *fgets(char *str, int num, FILE *stream);
-    pthread_mutex_init(&turno_mutex, NULL); // inicializa el mutex
-    pthread_mutex_lock(&turno_mutex);//bloquear ejecucion de hilos
-    int validarEntrada = 0;
 
-    //lista de jugadores
-    ListaJugador *listaJugadores;
-   // NodoJugador *nodoJugador;
-    listaJugadores = crearListaJugador();
-
-    //crear maso de fichas
-    ListaFichas *listaMaso;
-    listaMaso = crearLista();
-    insertarFichas(listaMaso);
-
-    //Lista de Mesa - lista de extremos
-    listaMesa = crearListaMesa();
+    //crear todas las listas
+    crearListas();
 
     //Mensaje de bienvenida
     printf("\nBienvenido al juego Dominó Sistemas Operativos 2023\n\n");
+
+    //llenar mazo y revolver fichas
+    iniciarMazo();
+
+    //ingresar la cantidad de jugadores
+    ingresarNumeroJugadores();
+
+    //crear archivo log.txt
+    crearArchivo();
+
+    //Iniciar jugadores - nombre y lista de ficha
+    iniciarJugadores();
+
+    validarNumeroPares();
+
+    asignarOrdenJuego();
+
+    //array de hilos
+    hilosJugadores = (pthread_t*)malloc(sizeof(pthread_t)*nJugadores); //se setean n cantidad de hilos
+
+    //hilo maestro inicia juego
+    pthread_create(&(administrador), NULL, &empezarJuego, NULL); //este hilo llama al
+
+    //método de iniciar juego y es el que pone a los demás hilos a funcionar
+    pthread_join(administrador, NULL); //se sincroniza
+
+
+    //pthread_exit(NULL);// destruye los hilos
+    return 0;
+}
+
+void crearListas(){
+    listaJugadores = crearListaJugador();// Crea la lista de jugadores y contiene la lista de fichas de cada uno
+    listaMaso = crearLista();//Crear lista fichas para comer y repartir
+    listaMesa = crearListaMesa();//Lista de Mesa - lista de extremos
+}
+
+void iniciarMazo(){
+    insertarFichas(listaMaso);//llenar lista de mazo
 
     //mostrar el maso
     printf("\n Mostrando el maso de fichas\n");
@@ -53,7 +97,10 @@ int main() {
     printf("\n Revolviendo el maso de fichas\n");
     desordenar(listaMaso);
     imprimir(listaMaso);
+}
 
+void ingresarNumeroJugadores(){
+    int validarEntrada = 0;
     //Solicitar numero jugadores
     do{
         char entrada[50];
@@ -65,17 +112,13 @@ int main() {
         nJugadores = validarNJugadores(entrada);
 
     }while ( nJugadores == 0);
+}
 
-    printf("Iniciando partida para %d Jugadores.\n", nJugadores);
+void iniciarJugadores(){
 
+    printf("Iniciando partida para %d Jugadores.\n\n", nJugadores);
     //calcular numero de fichas jugadores - mazo
     fichasXjugador = calcularFichasXjugador(nJugadores);
-
-    //array de hilos
-    pthread_t hilosJugadores[nJugadores];
-
-    //crear archivo log.txt
-    crearArchivo();
 
     //Ingresar nombres de jugadores
     for(int i = 0; i < nJugadores; i++){
@@ -91,7 +134,6 @@ int main() {
         printf("Se añade al jugador: %s\n", nombreJugador);
 
         //almacenar en lista de jugadores
-        //NodoJugador *nodoJugador = crearJugador(nombreJugador, 0, (i+1));
         NodoJugador *nodoJugador = crearJugador(nombreJugador, 0, 0);
         insertarJugador(listaJugadores, nodoJugador);
 
@@ -101,27 +143,17 @@ int main() {
 
         //repartir fichas a jugador
         repartirFichas(listaMaso, fichasXjugador, nodoJugador->listaFichasJugador);
-        //printf("\n\n");
+
     }
 
     //********************************
-    //ordenar lista de fichas de los jugadores
-    metodoBurbujaMazoJugador(listaJugadores);
+    ordenarMostrarFichasJugador();
+    //********************************
+}
 
-    //imprimir la lista de jugadores
-    printf("Los participantes son: \n");
-    mostrar(listaJugadores);
+void validarNumeroPares(){
 
-
-    //Imprimir la lista de mazo para comer
-    printf("Lista del mazo a comer: ");
-    mostrarMazoComer(listaMaso);
-
-
-
-    //*******************************************
     //validar el numero de fichas pares
-
     if( validarDobles(listaJugadores) ){
         do{
             printf("\n\nRevolviendo el maso de fichas ...");
@@ -147,32 +179,90 @@ int main() {
         }while( validarDobles(listaJugadores) != 0);
 
         //********************************
-        //ordenar lista de fichas de los jugadores
-        metodoBurbujaMazoJugador(listaJugadores);
-
-        //imprimir la lista de jugadores
-        printf("\n\nLos participantes son: \n");
-        mostrar(listaJugadores);
-
-
-        //Imprimir la lista de mazo para comer
-        printf("Lista del mazo a comer: ");
-        mostrarMazoComer(listaMaso);
+        ordenarMostrarFichasJugador();
+        //********************************
     }
 
 
-    // Asignar el orden de turno a cada jugador, segun fichas pares
-    //CODIGO AQUI
+}
 
-    //el jugador con la par mas alto
-    obtenerFichaDoble(*listaJugadores, nJugadores);
+void ordenarMostrarFichasJugador(){
+    //ordenar lista de fichas de los jugadores
+    metodoBurbujaMazoJugador(listaJugadores);
 
-    printf("\n\n\n");
     //imprimir la lista de jugadores
-    printf("Los participantes son: \n");
+    printf("\n\nLos participantes son: \n");
     mostrar(listaJugadores);
 
-    //**************************+ Arreglar los Hilos !!!!!!!!!!!!!!
+
+    //Imprimir la lista de mazo para comer
+    printf("Lista del mazo a comer: ");
+    mostrarMazoComer(listaMaso);
+}
+
+void asignarOrdenJuego(){
+
+    // Asignar el orden de turno a cada jugador, segun fichas pares
+    obtenerFichaDoble(*listaJugadores, nJugadores);
+    printf("\n\n\n");
+
+    //imprimir la lista de jugadores
+    printf("El orden de los participantes es: \n");
+    mostrar(listaJugadores);
+}
+
+void *empezarTurno(void * args){
+
+    // semaforo de bloqueo
+
+    printf("Turno jugador %d", turnoActual+1);
+    printf("\n");
+    //AQUI CODIGO DE ACCIONES POR TURNO
+    ponerFicha();
+
+
+
+    // semaforo de desbloqueo
+}
+
+void ponerFicha(){
+    printf("Poniendo x ficha\n");
+    //aquí estaría la lógica de poner la ficha
+}
+
+
+void *empezarJuego(void *args){
+
+
+    printf("Iniciando juego....\n\n");
+    while(estadoJuego){
+
+        if (pthread_create(&(hilosJugadores[turnoActual]), NULL, &empezarTurno,NULL)!=0){
+            printf("Error al crear hilos\n");
+        }
+
+        pthread_join(hilosJugadores[turnoActual], NULL);
+        turnoActual++;
+
+        if(turnoActual==nJugadores){
+            turnoActual=0;
+            numeroRonda++;
+        }
+
+        //condicion de terminar
+        if(numeroRonda >= 3){
+            estadoJuego =  false;
+        }
+
+        sleep(2); //con esto pueden alterar la velocidad con que muestran las cosas
+    }
+}
+
+
+
+/*
+
+     //**************************+ Arreglar los Hilos !!!!!!!!!!!!!!
 
     int errorHilo;// Variable para manejo de error en hilos
     int indice = 0; // indice para array de hilos
@@ -212,23 +302,6 @@ int main() {
         }
     }
 
-    
-    printf("Los hilos han terminado\n");
-    //free(&hilosJugadores);
-
-
-    for (int i = 0; i < nJugadores; i++) {
-        //pthread_detach(hilosJugadores[i]);
-        pthread_exit(&hilosJugadores[i] );
-    }
-
-    pthread_mutex_destroy(&turno_mutex); // detruye el mutex
-    pthread_exit(NULL);// destruye los hilos
-
-    return 0;
-}
-
-
 
 void *turno_jugador(void *parametro) {
 
@@ -249,15 +322,15 @@ void *turno_jugador(void *parametro) {
         }
 
         //******** temporal
-        if(turno_actual == 1 && isVacia(listaMesa)){
+       /* if(turno_actual == 1 && isVacia(listaMesa)){
             printf("\nPrimera jugada!\n");
             jugarTurno( listaMesa, nodoJugador);
             mostrarListaMesa(listaMesa);
             printf("\n");
             imprimir(nodoJugador->listaFichasJugador);
-        }
+        }*/
 
-        if(turno_actual == 2 && nodoJugador->nTurno != 1){
+       /* if(turno_actual == 2 && nodoJugador->nTurno != 1){
             ListaPosibles *listaPosibles = crearListaPosibles();
 
             printf("\nSegunda jugada!\n");
@@ -294,7 +367,7 @@ void *turno_jugador(void *parametro) {
             pthread_mutex_lock(&turno_mutex);
             terminar=0;
             printf("\nEl juego termino!\n");
-            pthread_mutex_unlock(&turno_mutex);
+           // pthread_mutex_unlock(&turno_mutex);
 
            // pthread_cancel();
 
@@ -308,3 +381,6 @@ void *turno_jugador(void *parametro) {
     //exit(0);
     pthread_exit(NULL);// destruye los hilos
 }
+
+
+*/
