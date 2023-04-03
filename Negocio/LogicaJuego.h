@@ -7,6 +7,7 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
+#include "../Listas/ListaMesa.h"
 
 
 int  calcularFichasXjugador( int nJugadores){
@@ -41,72 +42,167 @@ int validarNJugadores(char input[50] ){
 }
 
 
-/*
-typedef struct parametrosHilo{
-    pthread_mutex_t turno_mutex;
-    NodoJugador *nodoJugador;
-    int nJugadores;
-} parametrosHilo;
-*/
+void jugarTurno(ListaMesa *lista, NodoJugador *nodoJugador, ListaPosibles *listaPosibles){
 
-typedef struct ParametrosTurno{
-    NodoJugador* nodoJugador;
-    int nJugadores;
-    pthread_mutex_t turno_mutex;
-}ParametrosTurno;
+    if( isVacia(lista) && nodoJugador->nTurno == 1){//si la lista esta vacia es el primero en jugar
+        //buscar el doble mas alto
+        NodoFicha *parMasAlto = buscarFichaDoble( *nodoJugador->listaFichasJugador );
 
-/*
-void iniciarParametros (pthread_mutex_t turno_mutex, NodoJugador *nodoJugador,int nJugadores ){
+        //insertar ambos extremos en la listaMesa
+        NodoMesa *nodoExtremo1  = crearNodoMesa(parMasAlto->a);
+        NodoMesa *nodoExtremo2  = crearNodoMesa(parMasAlto->b);
+        insertarExtremo(lista,nodoExtremo1);
+        insertarExtremo(lista,nodoExtremo2);
 
-    pthread_mutex_t turno_mutex = turno_mutex;
-    NodoJugador *nodoJugador = nodoJugador;
-    int nJugadores = nJugadores;
-
-    parametrosHilo;
-}
-*/
-
-
-void *turnoJugador(void *parametro) {
-
-    ParametrosTurno *parametros = (ParametrosTurno*) parametro;
-    NodoJugador *nodoJugador = (NodoJugador *) parametros->nodoJugador;
-    //printf("El nombre del jugador en el turno es: %s\n",nodoJugador->nombre);
-
-   // printf("El nombre del jugador en el turno es: %s\n",nodoJugador->nombre);
-
-    int jugadorActual = 0;
-    int nRondas = 3;
-
-
-    long tid = (long)pthread_self(); // corrección
-
-    srand(time(NULL) + tid); // semilla diferente para cada hilo
-
-    for(int i = 0; i < nRondas; i++) {//ciclo de juego
-
-        pthread_mutex_lock(&parametros->turno_mutex); // bloquea el mutex para obtener el turno
-//        pthread_self() != parametros->jugadores[jugadorActual]
-        while(tid != jugadorActual) { // espera a que sea el turno del jugador
-            pthread_mutex_unlock(&parametros->turno_mutex); // libera el mutex mientras espera
-            pthread_mutex_lock(&parametros->turno_mutex); // vuelve a bloquear el mutex para obtener el turn0
+        //si es el [5|5], suma 2 puntos
+        if(parMasAlto->a == 5 && parMasAlto->b == 5){
+            nodoJugador->puntos+=2;
         }
 
-        //acciones del jugador
+        //eliminar ficha colocada de la lista del jugador
+        eliminarFichaJugada(nodoJugador->listaFichasJugador, parMasAlto);
+    } else{
 
-        printf("El nombre del jugador es: %s\n",nodoJugador->nombre);
-        printf("El turno del jugador es: %i\n", (i+1));
+        if(vaciaPosibles(listaPosibles)){//si no tiene fichas para jugar
+            printf("\nEl jugador debe comer una ficha y pasar turno");
+
+        }else{//si tiene fichas para jugar
+            printf("\nPosibles fichas para jugar el turno\n");
+            mostrarListaPosibles(listaPosibles);
+
+            //buscar la ficha con el puntaje mas alto y con la suma de sus extremos que sea menor
+            NodoPosibles *fichaJugar = obtenerFichaJugar(listaPosibles);
+            printf("\nLa ficha a colocar: [%d|%d]", fichaJugar->a, fichaJugar->b);
+
+        }
 
 
-        jugadorActual = (jugadorActual + 1) % parametros->nJugadores; // pasa el turno al siguiente jugador
+        /*
+         parametros la lista de fichas posibles
+         recorre la lista de fichas posibles
+         buscar la que tenga el puntaje mas alto y la aquella ficha que la suma de sus extremos se menor
+         retornar dicha ficha
+         */
 
-        pthread_mutex_unlock(&parametros->turno_mutex); // libera el mutex para el siguiente jugador
+
+        //modificar o agregar el nuevo extremo en la lisa de mesa
+        /*
+         parametros lista de mesa y nodo ficha a jugar
+         usar la ficha seleccionada
+         recorrer la lista de extremos
+         si la ficha seleccionada es par, modificar y agregar otro
+         si no es par, modificar un extremo
+         */
+
+        //eliminar ficha colocada de la lista del jugador
+        //eliminarFichaJugada(nodoJugador->listaFichasJugador, fichaPuntajeAlto);
+
     }
 
+}
+
+int calcularPuntos(ListaMesa *listaMesa, int extremo, int isDoble){
+
+    int sumatoria = extremo;
+
+    //recorrer listaMesa y sumo todos los extremos
+    NodoMesa *recorreMesa = listaMesa->primero;
+    while (recorreMesa != NULL){
+        sumatoria += recorreMesa->numero;
+        recorreMesa = recorreMesa->siguiente;
+    }
+
+    if(isDoble){//si es doble y posicion vertical
+        sumatoria += extremo;
+    }
+
+    return (sumatoria % 5 == 0)? (sumatoria / 5) : 0;
+}
+
+void agregarFichaConPuntaje(ListaPosibles *listaPosibles, ListaMesa *listaMesa, NodoFicha *nodoFicha){
+    int nPuntos = 0;
+
+    //hacer calculos con cada extremo disponible en la mesa
+    NodoMesa *recorreMesa = listaMesa->primero;
+
+    // revisando como poner la ficha
+    while(recorreMesa != NULL){
+
+        //si entra a alguno de los if hay al menos un extremo que coincide
+        if(recorreMesa->numero == nodoFicha->a && recorreMesa->numero == nodoFicha->b){
+            printf("Entrooo!, if pares");
+
+            /*
+            //Aqui trabaja con la doble
+           //revisar si la coloca vertical, suma ambos extremos
+            int posicionVertical = calcularPuntos(listaMesa, nodoFicha->a, 1);
+            //revisar si la coloca  horizontal, solo suma un extremo
+            int posicionHorizontal = calcularPuntos(listaMesa, nodoFicha->a, 0);
+
+            //sumar todos los extremos y dividirlo entre 5
+           //comparar cual es mas alto, el numero mas alto me dice que posicion colocar
+            if( posicionVertical >  posicionHorizontal){
+                //si es vertical agrego ambos extremos
+                //creo nodoMesa
+                NodoPosibles *nodoPosibles = crearNodoPosible( posicionVertical,nodoFicha);
+                //inserto nodo mesa extremo a
+                insertarNodoPosible(listaPosibles,nodoPosibles);
+                //inserto nodo mesa extremo b
+                insertarNodoPosible(listaPosibles,nodoPosibles);
+
+            }else{
+                //si es horizontal agrego 1 extremo
+                //creo nodoMesa
+                NodoPosibles *nodoPosibles = crearNodoPosible( posicionHorizontal,nodoFicha);
+                //inserto nodo mesa
+                insertarNodoPosible(listaPosibles,nodoPosibles);
+            }*/
+
+        }else if( recorreMesa->numero == nodoFicha->a){//Hay cocidencia con extremo a
+
+            //Aqui trabaja con la B, Siempre juega horizontal
+            nPuntos = calcularPuntos(listaMesa, nodoFicha->b, 0);
+
+            //agrego la ficha a listaPosible y nPuntaje
+            //creo nodoMesa
+            NodoPosibles *nodoPosibles = crearNodoPosible( nPuntos,nodoFicha->a, nodoFicha->b);
+
+            //inserto nodo mesa
+            insertarNodoPosible(listaPosibles,nodoPosibles);
 
 
+        }else if(recorreMesa->numero == nodoFicha->b){//Hay cocidencia con extremo b
+
+            //Aqui trabaja con la A, Siempre juega horizontal
+            nPuntos = calcularPuntos(listaMesa, nodoFicha->a, 0);
+
+            //agrego la ficha a listaPosible y nPuntaje
+            //creo nodoMesa
+            NodoPosibles *nodoPosibles = crearNodoPosible( nPuntos,nodoFicha->a, nodoFicha->b);
+            //inserto nodo mesa
+            insertarNodoPosible(listaPosibles,nodoPosibles);
+        }
+
+        recorreMesa = recorreMesa->siguiente;
+    }
 
 }
+
+ListaPosibles  *llenarListaPosibles(ListaPosibles  *listaPosibles, ListaMesa *listaMesa, ListaFichas *listaFichas){
+
+    //recorrer lista de fichas del jugador
+    NodoFicha *nodoFicha = listaFichas->primero;
+
+    while(nodoFicha != NULL){
+        //envio la ficha a un metodo para calcular puntaje y posicion
+        agregarFichaConPuntaje(listaPosibles,listaMesa,nodoFicha);
+        //paso a la siguiente ficha
+        nodoFicha = nodoFicha->siguiente;
+    }
+}
+
+
+
 
 
 

@@ -8,23 +8,24 @@
 
 typedef struct NodoPosibles{
     int nPuntos;
-    NodoFicha *NodoFicha;
+    int a;
+    int b;
     struct NodoPosibles *siguiente;
     struct NodoPosibles *anterior;
 }NodoPosibles;
 
-NodoPosibles *crearNodoPosible(int nPuntos, NodoFicha *nodoFicha1){
-    NodoPosibles *nodo = malloc(sizeof(nodo));
+NodoPosibles *crearNodoPosible(int nPuntos, int a, int b){
+    NodoPosibles *nodo = malloc(sizeof(NodoPosibles));
     nodo->nPuntos = nPuntos;
-    nodo->NodoFicha->a = nodoFicha1->a;
-    nodo->NodoFicha->b = nodoFicha1->b;
+    nodo->a = a;
+    nodo->b = b;
     nodo->siguiente = NULL;
     nodo->anterior = NULL;
     return nodo;
 }
 
 void mostrarNodoPosible(NodoPosibles *nodo){
-    printf("Puntos: %d, Ficha: [%d|%d]",nodo->nPuntos,nodo->NodoFicha->a,nodo->NodoFicha->b);
+    printf("Puntos: %d, Ficha: [%d|%d]",nodo->nPuntos,nodo->a,nodo->b);
 }
 
 #endif //PROYECTO_01_SO_NODOPOSIBLES_H

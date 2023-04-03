@@ -1,7 +1,3 @@
-//
-// Created by jurguen on 11/03/23.
-//
-
 #ifndef CLIONPROJECTS_LISTAJUGADOR_H
 #define CLIONPROJECTS_LISTAJUGADOR_H
 
@@ -103,14 +99,14 @@ void mostrar(ListaJugador *lista){ //imprime la lista
     }
 }
 
-void *asignarTurno(ListaJugador listaJugador, NodoFicha *fichaMasAlta, int nTurno ){
+void asignarTurno(ListaJugador *listaJugador, NodoFicha *fichaMasAlta, int nTurno ){
 
     //printf("\n\n\nLa ficha mas alta es [%d|%d] ",fichaMasAlta->a,fichaMasAlta->b);
     //encontro al jugador
     int flag = 0;
 
     //recorrer lista de jugadores
-    NodoJugador *recorreJugadores = listaJugador.primero;
+    NodoJugador *recorreJugadores = listaJugador->primero;
     while(recorreJugadores != NULL){
 
         //si no tiene turno asignado
@@ -144,7 +140,7 @@ void *asignarTurno(ListaJugador listaJugador, NodoFicha *fichaMasAlta, int nTurn
     }
 }
 
-void *obtenerFichaDoble(ListaJugador lista,int nJugadores) {
+void obtenerFichaDoble(ListaJugador *lista,int nJugadores) {
 
     //contador de turnos repartidos
     int contadorTurno = 1;
@@ -152,64 +148,62 @@ void *obtenerFichaDoble(ListaJugador lista,int nJugadores) {
     //asgnarle un turno a cada jugador
     for (int i = 0; i < nJugadores; ++i) {
         //nodo temporal con la ficha mas alta
-        NodoFicha *alta;
-        alta = crearFicha(0,0);
+        NodoFicha *alta = crearFicha(0,0);
 
         //bandera, si algun jugador tiene
         int flagHayPar = 0;
 
         //recorre la lista jugadores
-        NodoJugador *aux = lista.primero;
+        NodoJugador *nodoJugador = lista->primero;
+        while (nodoJugador != NULL){
 
-        while (aux != NULL){
-
-            //printf("\n\n\n Entrooo!");
             //badera si tiene par
             int flag = 0;
 
-            if( aux->nTurno == 0 ){//si el jugador no tiene turno asignado
-
+            if( nodoJugador->nTurno == 0 ){//si el jugador no tiene turno asignado
+                //printf("\nNombre jugador: %s\n", nodoJugador->nombre);
                 //recorre lista de fichas de jugador
-                NodoFicha *aux2 = aux->listaFichasJugador->primero;
-                while (aux2 != NULL) {
+                NodoFicha *nodoFichaJugador = nodoJugador->listaFichasJugador->primero;
+                while (nodoFichaJugador != NULL) {
 
                     //si la ficha es par Y el par es mas alto
-                    if(aux2->a == aux2->b){
+                    if(nodoFichaJugador->a == nodoFichaJugador->b){
                         //tiene par
                         flag = 1;
                         flagHayPar = 1;
-
+                        //printf("\nTiene par: \n");
                         //busca la ficha par mas alta
-                        if(aux2->a > alta->a){
-                            alta->a = aux2->a;
-                            alta->b = aux2->b;
+                        if(nodoFichaJugador->a > alta->a){//aquí  XXXXXX
+                            alta->a = nodoFichaJugador->a;
+                            alta->b = nodoFichaJugador->b;
                         }
 
-                    }else if(flag == 0 && flagHayPar == 0){//si no tiene par
 
+                    }else if(flag == 0 && flagHayPar == 0){//si no tiene par
+                       // printf("\nTiene no par: \n");
                         //buscar la ficha mas alta
-                        if( (aux2->a + aux2->b ) > (alta->a + alta->b ) ){
-                            alta->a = aux2->a;
-                            alta->b = aux2->b;
+                        if( (nodoFichaJugador->a + nodoFichaJugador->b ) > (alta->a + alta->b ) ){
+                            alta->a = nodoFichaJugador->a;
+                            alta->b = nodoFichaJugador->b;
                         }
 
                     }
 
                     //pasar a la siguente ficha
-                    aux2 = aux2->siguiente;
+                    nodoFichaJugador = nodoFichaJugador->siguiente;
                 }
 
             }
 
             //pasar al siguente jugador
-            aux = aux->sig;
+            nodoJugador = nodoJugador->sig;
 
             //llegar al ultimo jugador, seteo el numero nturno al jugador
-            if(aux == NULL){
+            if(nodoJugador == NULL){
+                //printf("\n****************************\n");
+                //printf("\n************** Se asigono turno a [%d | %d] **************\n",alta->a, alta->b);
                 // cual jugador tiene la ficha mas alta y asignarle el numero de turno
                 asignarTurno(lista, alta, contadorTurno);
-               // printf("\n\n\nLa ficha mas alta es [%d|%d] ",alta->a,alta->b);
-               // printf("\n\n\nSi habia par = %i en la ronda %i,  ",flagHayPar, contadorTurno);
 
                 //resetar nodo
                 alta = crearFicha(0,0);

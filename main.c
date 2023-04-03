@@ -22,6 +22,7 @@ pthread_t administrador; //hilo maestro que inicia el juego
 ListaJugador *listaJugadores;//lista de jugadores
 ListaMesa *listaMesa;//lista de extremos disponibles para jugar
 ListaFichas *listaMaso;//crear maso de fichas
+ListaPosibles *listaPosibles;
 
 
 //funciones
@@ -35,14 +36,11 @@ void iniciarJugadores();
 void validarNumeroPares();
 void ordenarMostrarFichasJugador();
 void asignarOrdenJuego();
-
-void ponerFicha();
 void *empezarTurno(void * args);
 void *empezarJuego(void *args);
 
 
 int main() {
-
 
     //crear todas las listas
     crearListas();
@@ -66,6 +64,8 @@ int main() {
 
     asignarOrdenJuego();
 
+    //exit(0);
+
     //array de hilos
     hilosJugadores = (pthread_t*)malloc(sizeof(pthread_t)*nJugadores); //se setean n cantidad de hilos
 
@@ -84,6 +84,7 @@ void crearListas(){
     listaJugadores = crearListaJugador();// Crea la lista de jugadores y contiene la lista de fichas de cada uno
     listaMaso = crearLista();//Crear lista fichas para comer y repartir
     listaMesa = crearListaMesa();//Lista de Mesa - lista de extremos
+    listaPosibles = crearListaPosibles();
 }
 
 void iniciarMazo(){
@@ -203,7 +204,7 @@ void ordenarMostrarFichasJugador(){
 void asignarOrdenJuego(){
 
     // Asignar el orden de turno a cada jugador, segun fichas pares
-    obtenerFichaDoble(*listaJugadores, nJugadores);
+    obtenerFichaDoble(listaJugadores, nJugadores);
     printf("\n\n\n");
 
     //imprimir la lista de jugadores
@@ -211,33 +212,68 @@ void asignarOrdenJuego(){
     mostrar(listaJugadores);
 }
 
-void *empezarTurno(void * args){
+void *empezarTurno(void * parametro) {
+
+    //reseteo de la lista de fichas posibles para jugar
+    listaPosibles = crearListaPosibles();
+
+    //inicializando datos del jugdor
+    NodoJugador *nodoJugador = (NodoJugador *) parametro;
 
     // semaforo de bloqueo
+    printf("\n****Turno jugador %d, nombre: %s ****\n", (turnoActual + 1), nodoJugador->nombre);
 
-    printf("Turno jugador %d", turnoActual+1);
+    //SI es el primer turno
+    if (turnoActual == 0 && isVacia(listaMesa)) {
+        printf("\n**Primer Ficha en Mesa**\n");
+        jugarTurno(listaMesa, nodoJugador, listaPosibles);
+        mostrarListaMesa(listaMesa);
+        printf("\nFichas restantes del jugador: ");
+        imprimir(nodoJugador->listaFichasJugador);
+    } else {
+
+        llenarListaPosibles(listaPosibles, listaMesa, nodoJugador->listaFichasJugador);
+
+        //coloca ficha
+        jugarTurno(listaMesa, nodoJugador, listaPosibles);
+        //printf("Extremos disponibles para jugar: ")
+        //mostrarListaMesa(listaMesa);
+        //printf("\n");
+        //imprimir(nodoJugador->listaFichasJugador);
+        //buscar la ficha con el punta mas alto
+
+        //modificar o agregar el nuevo extremo en la lisa de mesa -> will
+
+        // eliminar la ficha elijida de la lista del jugador
+
+
+    }
+
     printf("\n");
-    //AQUI CODIGO DE ACCIONES POR TURNO
-    ponerFicha();
-
-
 
     // semaforo de desbloqueo
 }
-
-void ponerFicha(){
-    printf("Poniendo x ficha\n");
-    //aquí estaría la lógica de poner la ficha
-}
-
 
 void *empezarJuego(void *args){
 
 
     printf("Iniciando juego....\n\n");
-    while(estadoJuego){
 
-        if (pthread_create(&(hilosJugadores[turnoActual]), NULL, &empezarTurno,NULL)!=0){
+    while(estadoJuego) {
+
+        //buscar datos jugador
+        NodoJugador *nodoJugador = listaJugadores->primero;
+        while (nodoJugador != NULL){
+
+            if(nodoJugador->nTurno == (turnoActual+1)){
+                break;
+            }
+            //pasar al siguiente nodo/jugador
+            nodoJugador = nodoJugador->sig;
+        }
+
+        //crear y iniciar hilo jugador
+        if (pthread_create(&(hilosJugadores[turnoActual]), NULL, &empezarTurno,(void *)nodoJugador) !=0 ){
             printf("Error al crear hilos\n");
         }
 
@@ -250,137 +286,10 @@ void *empezarJuego(void *args){
         }
 
         //condicion de terminar
-        if(numeroRonda >= 3){
+        if(numeroRonda >= 2){
             estadoJuego =  false;
         }
 
         sleep(2); //con esto pueden alterar la velocidad con que muestran las cosas
     }
 }
-
-
-
-/*
-
-     //**************************+ Arreglar los Hilos !!!!!!!!!!!!!!
-
-    int errorHilo;// Variable para manejo de error en hilos
-    int indice = 0; // indice para array de hilos
-
-    //crear hilos
-    NodoJugador *aux = listaJugadores->primero;
-    printf("\n\n");
-    while (aux != NULL){
-
-        printf("Creando hilo jugador %i\n", (indice+1));
-        //struct ParametrosTurno parametrosTurno = {aux, nJugadores, turno_mutex};
-        //errorHilo = pthread_create(&hilosJugadores[indice], NULL, turnoJugador, (void *) &parametrosTurno);
-
-        pthread_create(&hilosJugadores[indice], NULL, turno_jugador, (void *)aux);
-
-        if(errorHilo) {
-            printf("ERROR: retorno del código %d desde pthread_create()\n", errorHilo);
-            exit(-1);
-        }
-
-        //pasar al siguiente nodo/hilo
-        indice++;
-        aux = aux->sig;
-    }
-
-    printf("\n\n");
-    errorHilo = 0;
-
-    //iniciar ejecucion de los hilos
-    pthread_mutex_unlock(&turno_mutex); // libera el mutex mientras espera
-    for(int i = 0; i < nJugadores; i++) {
-        errorHilo = pthread_join(hilosJugadores[i], NULL);
-
-        if(errorHilo) {
-            printf("ERROR: retorno del código %d desde pthread_join()\n", errorHilo);
-            exit(-1);
-        }
-    }
-
-
-void *turno_jugador(void *parametro) {
-
-    NodoJugador *nodoJugador = (NodoJugador *) parametro;
-
-    int terminar = 1;
-    // Realizar el turno
-
-   do {
-
-        // Esperar a que sea el turno del jugador
-        pthread_mutex_lock(&turno_mutex);
-
-        while (nodoJugador->nTurno != turno_actual && terminar != 0) {
-            pthread_mutex_unlock(&turno_mutex);
-            sched_yield();
-            pthread_mutex_lock(&turno_mutex);
-        }
-
-        //******** temporal
-       /* if(turno_actual == 1 && isVacia(listaMesa)){
-            printf("\nPrimera jugada!\n");
-            jugarTurno( listaMesa, nodoJugador);
-            mostrarListaMesa(listaMesa);
-            printf("\n");
-            imprimir(nodoJugador->listaFichasJugador);
-        }*/
-
-       /* if(turno_actual == 2 && nodoJugador->nTurno != 1){
-            ListaPosibles *listaPosibles = crearListaPosibles();
-
-            printf("\nSegunda jugada!\n");
-
-            llenarListaPosibles(listaPosibles,listaMesa,nodoJugador->listaFichasJugador);
-
-            printf("\n\n Lista de posibles juegos: ");
-            mostrarListaPosibles(listaPosibles);
-
-            exit(0);
-        }
-
-
-
-        //si todos jugaron su ronda se reinicia el contador de ronda
-        printf("Turno del jugador %s (turno=%d)\n", nodoJugador->nombre, nodoJugador->nTurno);
-
-        // Esperar un poco antes de continuar con el siguiente turno
-        usleep(2000000);
-
-       printf("turno: %d , njugadores: %d \n", turno_actual, nJugadores);
-       //aumentar la ronda
-       if(turno_actual == nJugadores){
-           printf("Se ejecuto la ronda: %d\n", numeroRondas);
-           numeroRondas++;
-       }
-
-       // Pasar al siguiente jugador
-        turno_actual = (turno_actual % nJugadores) + 1;
-        pthread_mutex_unlock(&turno_mutex);
-
-        //condicion de terminar
-        if(numeroRondas > 2){
-            pthread_mutex_lock(&turno_mutex);
-            terminar=0;
-            printf("\nEl juego termino!\n");
-           // pthread_mutex_unlock(&turno_mutex);
-
-           // pthread_cancel();
-
-            pthread_exit(0);
-
-            return NULL;
-        }
-
-    } while (terminar != 0);
-
-    //exit(0);
-    pthread_exit(NULL);// destruye los hilos
-}
-
-
-*/

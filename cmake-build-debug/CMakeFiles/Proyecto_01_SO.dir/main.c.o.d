@@ -71,15 +71,17 @@ CMakeFiles/Proyecto_01_SO.dir/main.c.o: \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h \
  /usr/include/ctype.h \
+ /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Listas/ListaMesa.h \
+ /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Listas/NodoMesa.h \
+ /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Listas/NodoFichas.h \
+ /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Listas/NodoJugador.h \
+ /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Listas/ListaJugador.h \
+ /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Listas/ListaFichas.h \
+ /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Listas/ListaPosibles.h \
+ /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Listas/NodoPosibles.h \
+ /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Listas/ListaMesa.h \
  /home/liwbh/CLionProjects/Proyecto-01-SO/Listas//ListaMesa.h \
- /home/liwbh/CLionProjects/Proyecto-01-SO/Listas//NodoMesa.h \
- /home/liwbh/CLionProjects/Proyecto-01-SO/Listas//NodoFichas.h \
- /home/liwbh/CLionProjects/Proyecto-01-SO/Listas//NodoJugador.h \
- /home/liwbh/CLionProjects/Proyecto-01-SO/Listas//ListaJugador.h \
- /home/liwbh/CLionProjects/Proyecto-01-SO/Listas//ListaFichas.h \
  /home/liwbh/CLionProjects/Proyecto-01-SO/Listas//ListaPosibles.h \
- /home/liwbh/CLionProjects/Proyecto-01-SO/Listas//NodoPosibles.h \
- /home/liwbh/CLionProjects/Proyecto-01-SO/Listas//ListaMesa.h \
  /usr/include/unistd.h /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h \
