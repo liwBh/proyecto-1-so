@@ -221,7 +221,7 @@ void *empezarTurno(void * parametro) {
     NodoJugador *nodoJugador = (NodoJugador *) parametro;
 
     // semaforo de bloqueo
-    printf("\n****Turno jugador %d, nombre: %s ****\n", (turnoActual + 1), nodoJugador->nombre);
+    printf("\n****Numero de turno: %d ****\n", (turnoActual + 1));
 
     //SI es el primer turno
     if (turnoActual == 0 && isVacia(listaMesa)) {

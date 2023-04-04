@@ -217,4 +217,5 @@ void obtenerFichaDoble(ListaJugador *lista,int nJugadores) {
 }
 
 
+
 #endif //CLIONPROJECTS_LISTAJUGADOR_H

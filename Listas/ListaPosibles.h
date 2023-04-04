@@ -55,12 +55,12 @@ void mostrarListaPosibles(ListaPosibles *lista){
 
 NodoPosibles *obtenerFichaJugar(ListaPosibles *lista){
     NodoPosibles *aux = lista->primero;
-    NodoPosibles *valor = crearNodoPosible(0,0,0);
+    NodoPosibles *valor = crearNodoPosible(0,0,0,0);
     int puntajeAlto = 0;
     while (aux != NULL){
         if(aux->nPuntos >= puntajeAlto && aux->a + aux->b > valor->a + valor->b) {
             puntajeAlto = aux->nPuntos;
-            valor = crearNodoPosible(aux->nPuntos,aux->a,aux->b);
+            valor = crearNodoPosible(aux->nPuntos,aux->a,aux->b,aux->posicion);
         }
         aux = aux->siguiente;
     }
