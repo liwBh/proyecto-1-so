@@ -123,9 +123,9 @@ void jugarTurno(ListaMesa *lista, NodoJugador *nodoJugador, ListaPosibles *lista
 
 }
 
-int calcularPuntos(ListaMesa *listaMesa, int extremo, int isDoble){
+int calcularPuntos(ListaMesa *listaMesa, int extremoSumar,int extremoRestar, int isDoble){
 
-    int sumatoria = extremo;
+    int sumatoria = extremoSumar;
 
     //recorrer listaMesa y sumo todos los extremos
     NodoMesa *recorreMesa = listaMesa->primero;
@@ -135,8 +135,10 @@ int calcularPuntos(ListaMesa *listaMesa, int extremo, int isDoble){
     }
 
     if(isDoble){//si es doble y posicion vertical
-        sumatoria += extremo;
+        sumatoria += extremoSumar;
     }
+
+    sumatoria -= extremoRestar;
 
     return (sumatoria % 5 == 0)? (sumatoria / 5) : 0;
 }
@@ -183,7 +185,7 @@ void agregarFichaConPuntaje(ListaPosibles *listaPosibles, ListaMesa *listaMesa, 
         }else if( recorreMesa->numero == nodoFicha->a){//Hay cocidencia con extremo a
 
             //Aqui trabaja con la B, Siempre juega horizontal
-            nPuntos = calcularPuntos(listaMesa, nodoFicha->b, 0);
+            nPuntos = calcularPuntos(listaMesa, nodoFicha->b,nodoFicha->a, 0);
 
             //agrego la ficha a listaPosible y nPuntaje
             //creo nodoMesa
@@ -196,7 +198,7 @@ void agregarFichaConPuntaje(ListaPosibles *listaPosibles, ListaMesa *listaMesa, 
         }else if(recorreMesa->numero == nodoFicha->b){//Hay cocidencia con extremo b
 
             //Aqui trabaja con la A, Siempre juega horizontal
-            nPuntos = calcularPuntos(listaMesa, nodoFicha->a, 0);
+            nPuntos = calcularPuntos(listaMesa, nodoFicha->a,nodoFicha->b, 0);
 
             //agrego la ficha a listaPosible y nPuntaje
             //creo nodoMesa
