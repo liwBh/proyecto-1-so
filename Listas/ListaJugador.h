@@ -161,7 +161,7 @@ void obtenerFichaDoble(ListaJugador *lista,int nJugadores) {
             int flag = 0;
 
             if( nodoJugador->nTurno == 0 ){//si el jugador no tiene turno asignado
-                //printf("\nNombre jugador: %s\n", nodoJugador->nombre);
+                printf("\nNombre jugador: %s\n", nodoJugador->nombre);
                 //recorre lista de fichas de jugador
                 NodoFicha *nodoFichaJugador = nodoJugador->listaFichasJugador->primero;
                 while (nodoFichaJugador != NULL) {
@@ -171,16 +171,24 @@ void obtenerFichaDoble(ListaJugador *lista,int nJugadores) {
                         //tiene par
                         flag = 1;
                         flagHayPar = 1;
-                        //printf("\nTiene par: \n");
+                        printf("\nTiene par: \n");
+
+                        //si alta no hay un par resetear alta
+                        if(alta->a != alta->b){
+                            //resetar nodo
+                            alta = crearFicha(0,0);
+                        }
+
+
                         //busca la ficha par mas alta
-                        if(nodoFichaJugador->a > alta->a){//aquí  XXXXXX
+                        if(nodoFichaJugador->a > alta->a){//aquí  XXXXXX - si entra un man sin par ya
                             alta->a = nodoFichaJugador->a;
                             alta->b = nodoFichaJugador->b;
                         }
 
 
                     }else if(flag == 0 && flagHayPar == 0){//si no tiene par
-                       // printf("\nTiene no par: \n");
+                       printf("\nNo tiene par: \n");
                         //buscar la ficha mas alta
                         if( (nodoFichaJugador->a + nodoFichaJugador->b ) > (alta->a + alta->b ) ){
                             alta->a = nodoFichaJugador->a;
@@ -201,12 +209,12 @@ void obtenerFichaDoble(ListaJugador *lista,int nJugadores) {
             //llegar al ultimo jugador, seteo el numero nturno al jugador
             if(nodoJugador == NULL){
                 //printf("\n****************************\n");
-                //printf("\n************** Se asigono turno a [%d | %d] **************\n",alta->a, alta->b);
+                printf("\n************** Se asigono turno a [%d | %d] **************\n",alta->a, alta->b);
                 // cual jugador tiene la ficha mas alta y asignarle el numero de turno
                 asignarTurno(lista, alta, contadorTurno);
 
                 //resetar nodo
-                alta = crearFicha(0,0);
+                //alta = crearFicha(0,0);
 
                 //pasar al siguient turno
                 contadorTurno++;

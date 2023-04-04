@@ -64,7 +64,7 @@ int main() {
 
     asignarOrdenJuego();
 
-    //exit(0);
+    exit(0);
 
     //array de hilos
     hilosJugadores = (pthread_t*)malloc(sizeof(pthread_t)*nJugadores); //se setean n cantidad de hilos
