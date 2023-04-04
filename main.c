@@ -286,6 +286,7 @@ void *empezarJuego(void *args){
         //condicion de terminar
         if(numeroRonda >= 2){
             estadoJuego =  false;
+            printf("\n\n............{FIN DE JUEGO}...............");
         }
 
         sleep(2); //con esto pueden alterar la velocidad con que muestran las cosas

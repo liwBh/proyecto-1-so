@@ -101,13 +101,17 @@ void jugarTurno(ListaMesa *lista, NodoJugador *nodoJugador, ListaPosibles *lista
 
             //modificar o agregar el nuevo extremo en la lisa de mesa
             actualizarListaMesa(lista, fichaJugar);
+            printf("\n Se murio x1");
 
             //sumarle los puntos
             nodoJugador->puntos+= fichaJugar->nPuntos;
+            printf("\n Se murio x2");
 
             //eliminar la ficha colocada de la lista del jugador
             NodoFicha  *nodoEliminar = crearFicha(fichaJugar->a,fichaJugar->b);
+            printf("\n Se murio x3");
             eliminarFichaJugada(nodoJugador->listaFichasJugador, nodoEliminar);
+            printf("\n Se murio x4");
 
             //imprimir datos del jugador
             printf("\n--------Datos del jugador-------- \n");
@@ -134,8 +138,8 @@ int calcularPuntos(ListaMesa *listaMesa, int extremoSumar,int extremoRestar, int
         recorreMesa = recorreMesa->siguiente;
     }
 
-    if(isDoble){//si es doble y posicion vertical
-        sumatoria += extremoSumar;
+    if(isDoble ==1){//si es doble y posicion vertical
+        sumatoria += extremoSumar;//queda pendiente restar el extremo de la mesa donde se coloco la ficha doble
     }
 
     sumatoria -= extremoRestar;
@@ -154,33 +158,32 @@ void agregarFichaConPuntaje(ListaPosibles *listaPosibles, ListaMesa *listaMesa, 
 
         //si entra a alguno de los if hay al menos un extremo que coincide
         if(recorreMesa->numero == nodoFicha->a && recorreMesa->numero == nodoFicha->b){
-            printf("Entrooo!, if pares");
-
-            /*
             //Aqui trabaja con la doble
+            printf("\n[Tiene un par para colocar]\n");
+           /* NodoPosibles *nodoPosibles;
+            //falta eliminar el extremo, que se tapa, extremo a restar vertical
+
            //revisar si la coloca vertical, suma ambos extremos
-            int posicionVertical = calcularPuntos(listaMesa, nodoFicha->a, 1);
+            int ptsVertical = calcularPuntos(listaMesa, nodoFicha->a,0 ,1);
+
             //revisar si la coloca  horizontal, solo suma un extremo
-            int posicionHorizontal = calcularPuntos(listaMesa, nodoFicha->a, 0);
+            int ptsHorizontal = calcularPuntos(listaMesa, nodoFicha->a,nodoFicha->b, 0);
 
             //sumar todos los extremos y dividirlo entre 5
            //comparar cual es mas alto, el numero mas alto me dice que posicion colocar
-            if( posicionVertical >  posicionHorizontal){
+            if( ptsVertical >  ptsHorizontal){
                 //si es vertical agrego ambos extremos
-                //creo nodoMesa
-                NodoPosibles *nodoPosibles = crearNodoPosible( posicionVertical,nodoFicha);
-                //inserto nodo mesa extremo a
-                insertarNodoPosible(listaPosibles,nodoPosibles);
-                //inserto nodo mesa extremo b
-                insertarNodoPosible(listaPosibles,nodoPosibles);
+                nodoPosibles = crearNodoPosible( ptsVertical,nodoFicha->a, nodoFicha->b,1);
+                printf("Puede jugar vertical");
 
             }else{
                 //si es horizontal agrego 1 extremo
-                //creo nodoMesa
-                NodoPosibles *nodoPosibles = crearNodoPosible( posicionHorizontal,nodoFicha);
-                //inserto nodo mesa
-                insertarNodoPosible(listaPosibles,nodoPosibles);
-            }*/
+                nodoPosibles = crearNodoPosible( ptsHorizontal,nodoFicha->a, nodoFicha->b,0);
+                printf("Puede jugar horizontal");
+            }
+
+            //inserto nodo mesa
+            insertarNodoPosible(listaPosibles,nodoPosibles);*/
 
         }else if( recorreMesa->numero == nodoFicha->a){//Hay cocidencia con extremo a
 

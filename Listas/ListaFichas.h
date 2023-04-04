@@ -170,8 +170,8 @@ void eliminarFichaJugada(ListaFichas *lista, NodoFicha *nodoEliminar){
             aux1->anterior = NULL;
         }else if((aux2->a == aux1->a && aux2->b  == aux1->b) && (aux1->a == lista->primero->a && aux1->b == lista->primero->b)) {
             lista->primero = aux1->siguiente;
-            aux1->anterior->siguiente = NULL;
-            aux1->anterior->anterior = NULL;
+            aux1->siguiente = NULL;
+            aux1->anterior = NULL;
         }else if(aux2->a == aux1->a && aux2->b  == aux1->b){
             aux1->anterior->siguiente = aux1->siguiente;
             aux1->siguiente->anterior = aux1->anterior;
