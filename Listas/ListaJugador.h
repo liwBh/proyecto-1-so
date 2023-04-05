@@ -10,7 +10,7 @@ typedef struct ListaJugador{
 
 //Creo la lista de jugadores, reservando espacio en memoria e inicializo los atributos
 ListaJugador *crearListaJugador(){
-    ListaJugador *listaJugador = (ListaJugador*) malloc(sizeof(listaJugador)); //Reserva espacio
+    ListaJugador *listaJugador = (ListaJugador*) malloc(sizeof(ListaJugador)); //Reserva espacio
     listaJugador->primero = NULL; //Inicializo los punteros
     listaJugador->ultimo = NULL; //Inicializo los punteros
     return listaJugador;
@@ -216,6 +216,7 @@ void obtenerFichaDoble(ListaJugador *lista,int nJugadores) {
     }
 
 }
+
 
 
 

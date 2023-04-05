@@ -19,7 +19,7 @@ typedef struct ListaPosibles{
 
 
 ListaPosibles *crearListaPosibles(){
-    ListaPosibles *listaPosibles = (ListaPosibles*) malloc(sizeof(listaPosibles));
+    ListaPosibles *listaPosibles = (ListaPosibles*) malloc(sizeof(ListaPosibles));
     listaPosibles->primero = NULL;
     listaPosibles->ultimo = NULL;
     return listaPosibles;

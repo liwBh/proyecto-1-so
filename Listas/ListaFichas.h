@@ -5,9 +5,9 @@
 #ifndef PRUEBAS_LISTAFICHAS_H
 #define PRUEBAS_LISTAFICHAS_H
 #include "NodoFichas.h"
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 typedef struct ListaFichas{
     struct NodoFicha *primero;
@@ -59,9 +59,7 @@ void desordenar(ListaFichas *lista) {
         n++; // Se cuenta la cantidad de nodos
         aux = aux->anterior;
     }
-
     srand(time(NULL)); // Se inicializa el generador de números aleatorios con el tiempo actual
-
     aux = lista->ultimo;
     while (aux != NULL) {
         int k = rand() % n; // Se genera un número aleatorio entre 0 y n-1
@@ -132,25 +130,24 @@ void mostrarMazoComer(ListaFichas *lista){
     }
 }
 
-//busca la ficha doble mas alta
+//busca la ficha doble más alta
 NodoFicha *buscarFichaDoble(ListaFichas listaFichas) {
 
     //recorre lista de fichas de jugador
     NodoFicha *aux = listaFichas.primero;
 
-    //nodo temporal con la ficha mas alta
+    //nodo temporal con la ficha más alta
     NodoFicha *alta;
     alta = crearFicha(0, 0);
 
     while (aux != NULL) {
 
-        //si la ficha es par Y el par es mas alto
+        //si la ficha es par Y el par es más alto
         if ((aux->a == aux->b) && (aux->a > alta->a)) {
-            //busca la ficha par mas alta
+            //busca la ficha par más alta
             alta->a = aux->a;
             alta->b = aux->b;
         }
-
 
         //pasar a la siguente ficha
         aux = aux->siguiente;
@@ -159,27 +156,54 @@ NodoFicha *buscarFichaDoble(ListaFichas listaFichas) {
     return alta;
 }
 
+
+
 void eliminarFichaJugada(ListaFichas *lista, NodoFicha *nodoEliminar){
 
-    NodoFicha *aux1 = lista->primero;
-    NodoFicha *aux2 = crearFicha(nodoEliminar->a,nodoEliminar->b);
-    while (aux1 != NULL){
-        if((aux2->a == aux1->a && aux2->b  == aux1->b) && (aux1->a == lista->ultimo->a && aux1->b == lista->ultimo->b)) {
-            lista->ultimo = aux1->anterior;
-            aux1->anterior->siguiente = NULL;
-            aux1->anterior = NULL;
-        }else if((aux2->a == aux1->a && aux2->b  == aux1->b) && (aux1->a == lista->primero->a && aux1->b == lista->primero->b)) {
-            lista->primero = aux1->siguiente;
-            aux1->siguiente = NULL;
-            aux1->anterior = NULL;
-        }else if(aux2->a == aux1->a && aux2->b  == aux1->b){
-            aux1->anterior->siguiente = aux1->siguiente;
-            aux1->siguiente->anterior = aux1->anterior;
-            aux1->anterior = NULL;
-            aux1->siguiente = NULL;
+    if(estaVacia(lista)){
+        printf("La lista esta vacia");
+    }else{
+        NodoFicha *aux1 = lista->primero;
+        NodoFicha *aux2 = crearFicha(nodoEliminar->a,nodoEliminar->b);
+
+        while (aux1 != NULL){
+            if((aux2->a == lista->ultimo->a) && (aux2->b == lista->ultimo->b) &&  (aux2->a == lista->primero->a) && (aux2->b == lista->primero->b)){
+                lista->primero = NULL;
+                lista->ultimo = NULL;
+                //si elimina la ultima ficha y solo hay 2 fichas
+            }else if(  (aux2->a == lista->ultimo->a) && (aux2->b == lista->ultimo->b) && (lista->primero->siguiente == lista->ultimo) && (lista->ultimo->anterior == lista->primero)){
+                lista->ultimo = lista->primero;
+                lista->primero->siguiente = NULL;
+                lista->primero->anterior = NULL;
+
+                //si elimina la primera ficha y solo hay 2 fichas
+            }else if( (aux2->a == lista->primero->a) && (aux2->b == lista->primero->b) && (lista->ultimo->anterior == lista->primero) && (lista->primero->siguiente == lista->ultimo) ){
+                lista->primero = lista->ultimo;
+                lista->ultimo->anterior = NULL;
+                lista->ultimo->siguiente = NULL;
+
+                //elimina el último de la lista, si hay más 2 fichas
+            }else if((aux2->a == aux1->a && aux2->b  == aux1->b) && (aux1->a == lista->ultimo->a && aux1->b == lista->ultimo->b)) {
+                lista->ultimo = aux1->anterior;
+                aux1->anterior->siguiente = NULL;
+                aux1->anterior = NULL;
+
+                //elimina el primero de la lista, si hay más 2 fichas
+            }else if((aux2->a == aux1->a && aux2->b  == aux1->b) && (aux1->a == lista->primero->a && aux1->b == lista->primero->b)) {
+                lista->primero = aux1->siguiente;
+                aux1->siguiente = NULL;
+                aux1->anterior = NULL;
+
+                //Elimina en el medio de la lista
+            }else if(aux2->a == aux1->a && aux2->b  == aux1->b){
+                aux1->anterior->siguiente = aux1->siguiente;
+                aux1->siguiente->anterior = aux1->anterior;
+                aux1->anterior = NULL;
+                aux1->siguiente = NULL;
+            }
+
+            aux1 = aux1->siguiente;
         }
-        aux1 = aux1->siguiente;
     }
 }
-
 #endif //PRUEBAS_LISTAFICHAS_H

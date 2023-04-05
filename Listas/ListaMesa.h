@@ -18,7 +18,7 @@ typedef struct ListaMesa{
 }ListaMesa;
 
 ListaMesa *crearListaMesa(){
-    ListaMesa *listaMesa = (ListaMesa *) malloc(sizeof(listaMesa)); //Reserva espacio
+    ListaMesa *listaMesa = (ListaMesa *) malloc(sizeof(ListaMesa)); //Reserva espacio
     listaMesa->primero = NULL; //Inicializo los punteros
     listaMesa->ultimo = NULL; //Inicializo los punteros
     return listaMesa;

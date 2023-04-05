@@ -14,7 +14,7 @@ typedef struct NodoMesa{
 }NodoMesa;
 
 NodoMesa *crearNodoMesa(int numero){
-    NodoMesa *nodo = malloc(sizeof(nodo));
+    NodoMesa *nodo = malloc(sizeof(NodoMesa));
     nodo->numero = numero;
     nodo->siguiente = NULL;
     nodo->anterior = NULL;

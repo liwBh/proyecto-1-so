@@ -1,5 +1,5 @@
-Jugador:AAAA, Puntos:0
-Jugador:BBBB, Puntos:0
-Jugador:CCC, Puntos:0
-Jugador:DDD, Puntos:0
-Jugador:EEE, Puntos:0
+Jugador:aaa, Puntos:0
+Jugador:bbb, Puntos:0
+Jugador:ccc, Puntos:0
+Jugador:ddd, Puntos:0
+Jugador:eee, Puntos:0

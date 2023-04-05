@@ -3,8 +3,6 @@
 #include "Listas/ListaJugador.h"
 #include "Listas/ListaFichas.h"
 #include "Negocio/LogicaJuego.h"
-#include "Listas//ListaMesa.h"
-#include "Listas//ListaPosibles.h"
 #include <pthread.h>
 #include <unistd.h>
 #include <stdbool.h>
@@ -26,9 +24,6 @@ ListaPosibles *listaPosibles;
 
 
 //funciones
-void *turno_jugador(void *parametro);
-
-
 void crearListas();
 void iniciarMazo();
 void ingresarNumeroJugadores();
@@ -36,8 +31,8 @@ void iniciarJugadores();
 void validarNumeroPares();
 void ordenarMostrarFichasJugador();
 void asignarOrdenJuego();
-void *empezarTurno(void * args);
-void *empezarJuego(void *args);
+void *empezarTurno(void *args);
+void *empezarJuego();
 
 
 int main() {
@@ -99,7 +94,7 @@ void iniciarMazo(){
 }
 
 void ingresarNumeroJugadores(){
-    int validarEntrada = 0;
+
     //Solicitar numero jugadores
     do{
         char entrada[50];
@@ -210,49 +205,38 @@ void asignarOrdenJuego(){
     mostrar(listaJugadores);
 }
 
-void *empezarTurno(void * parametro) {
+void *empezarTurno(void * args) {
 
     //reseteo de la lista de fichas posibles para jugar
     listaPosibles = crearListaPosibles();
 
     //inicializando datos del jugdor
-    NodoJugador *nodoJugador = (NodoJugador *) parametro;
+    NodoJugador *nodoJugador = (NodoJugador *) args;
 
-    // semaforo de bloqueo
     printf("\n****Numero de turno: %d ****\n", (turnoActual + 1));
 
     //SI es el primer turno
     if (turnoActual == 0 && isVacia(listaMesa)) {
         printf("\n**Primer Ficha en Mesa**\n");
-        jugarTurno(listaMesa, nodoJugador, listaPosibles);
+        jugarTurno(listaMesa, nodoJugador, listaPosibles,listaMaso);
         mostrarListaMesa(listaMesa);
         printf("\nFichas restantes del jugador: ");
         imprimir(nodoJugador->listaFichasJugador);
     } else {
-
+        //agregar todas las fichas que puede usar en el turno
         llenarListaPosibles(listaPosibles, listaMesa, nodoJugador->listaFichasJugador);
 
         //coloca ficha
-        jugarTurno(listaMesa, nodoJugador, listaPosibles);
-        //printf("Extremos disponibles para jugar: ")
-        //mostrarListaMesa(listaMesa);
-        //printf("\n");
-        //imprimir(nodoJugador->listaFichasJugador);
-        //buscar la ficha con el punta mas alto
-
-        //modificar o agregar el nuevo extremo en la lisa de mesa -> will
-
-        // eliminar la ficha elijida de la lista del jugador
-
+        jugarTurno(listaMesa, nodoJugador, listaPosibles, listaMaso);
 
     }
 
     printf("\n");
 
-    // semaforo de desbloqueo
+    return 0;
 }
 
-void *empezarJuego(void *args){
+void *empezarJuego(){
 
 
     printf("Iniciando juego....\n\n");
@@ -284,11 +268,25 @@ void *empezarJuego(void *args){
         }
 
         //condicion de terminar
-        if(numeroRonda >= 2){
+        /*if( estaVacia(listaMaso ) && estaVacia(nodoJugador->listaFichasJugador)){
+            estadoJuego =  false;
+            printf("\n\n............{FIN DE JUEGO}...............");
+        } */
+
+        if( verificarFinJuego(listaJugadores, listaMaso) ){
             estadoJuego =  false;
             printf("\n\n............{FIN DE JUEGO}...............");
         }
 
+        //el juego termina si no hay fichas para comer y el jugador no tiene fichas
+       /* if(numeroRonda >= 2){
+            estadoJuego =  false;
+            printf("\n\n............{FIN DE JUEGO}...............");
+        }  */
+
+
         sleep(2); //con esto pueden alterar la velocidad con que muestran las cosas
     }
+
+    return 0;
 }
