@@ -216,7 +216,41 @@ void obtenerFichaDoble(ListaJugador *lista,int nJugadores) {
     }
 
 }
+int sumarFichasRestrantes(ListaFichas *listaFichas){
+    int sumatoria = 0;
 
+    if(listaFichas->primero != NULL){
+        NodoFicha *recorre = listaFichas->primero;
+        while (recorre != NULL) {
+            sumatoria += (recorre->a + recorre->b);
+            recorre = recorre->siguiente;
+        }
+    }
+
+    return sumatoria;
+}
+
+NodoJugador *buscarPuntaGanador(ListaJugador *listaJugador){
+    NodoJugador *recorre = listaJugador->primero;
+    NodoJugador *devolver = crearJugador(recorre->nombre,recorre->puntos,recorre->nTurno);
+
+
+    while (recorre != NULL) {
+        if(recorre->puntos >= devolver->puntos){
+            if(recorre->puntos == devolver->puntos){
+                //si tiene el mismo puntaje, gana el jugador con menos puntos
+                int a = sumarFichasRestrantes(recorre->listaFichasJugador);
+                int b = sumarFichasRestrantes();
+
+            } else{
+                //es extrictamente mayor
+            }
+        }
+        recorre = recorre->sig;
+    }
+    printf("\n***El nombre del ganador es: %s***",devolver->nombre);
+    return devolver;
+}
 
 
 

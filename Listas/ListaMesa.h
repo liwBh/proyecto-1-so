@@ -42,7 +42,6 @@ void insertarExtremo(ListaMesa *lista, NodoMesa *nodo){
         lista->ultimo->siguiente = nodo;
         nodo->anterior = lista->ultimo;
         lista->ultimo = nodo;
-
     }
 }
 

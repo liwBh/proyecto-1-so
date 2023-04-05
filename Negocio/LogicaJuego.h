@@ -313,12 +313,35 @@ void llenarListaPosibles(ListaPosibles  *listaPosibles, ListaMesa *listaMesa, Li
     }
 }
 
-//M
-int verificarFinJuego(ListaJugador *lista, ListaFichas *listaFichas){
+int verificarNoJugadas(ListaJugador *listaJugadores, ListaFichas *listaMaso, ListaMesa *listaMesa){
+    int flag = 0;
+    if(listaMaso->primero == NULL){
+        NodoMesa  *recorreExtremos = listaMesa->primero;
+        while (recorreExtremos != NULL){
+            NodoJugador *recorreJugadores = listaJugadores->primero;
+            while(recorreJugadores != NULL){
+                NodoFicha *recorreFichas = recorreJugadores->listaFichasJugador->primero;
+                while (recorreFichas != NULL) {
+                    if(recorreExtremos->numero == recorreFichas->a || recorreExtremos->numero == recorreFichas->b){
+                        return 0;
+                    }else{
+                        flag = 1;
+                    }
+                    recorreFichas = recorreFichas->siguiente;
+                }
+                recorreJugadores = recorreJugadores->sig;
+            }
+            recorreExtremos = recorreExtremos->siguiente;
+        }
+    }
+    return flag;
+}
+
+int verificarFinJuego(ListaJugador *lista, ListaFichas *listaMaso){
     int flag = 0;
 
     //si no hay fichas en el mazo para comer
-    if(listaFichas->primero == NULL){
+    if(listaMaso->primero == NULL){
         NodoJugador *recorreJug = lista->primero;
         while(recorreJug != NULL){
 
@@ -334,15 +357,4 @@ int verificarFinJuego(ListaJugador *lista, ListaFichas *listaFichas){
     return flag;
 }
 
-
-
-
-
-
-
-
-
 #endif //PROYECTO_01_SO_LOGICAJUEGO_H
-
-
-
