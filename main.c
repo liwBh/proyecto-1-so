@@ -276,8 +276,15 @@ void *empezarJuego(){
             numeroRonda++;
         }
 
+        //condicion de terminar en caso que ninguno de los jugadores haya jugado
+        if((noPusoFichas == nJugadores) && (turnoActual == nJugadores)){
+            estadoJuego =  false;
+            printf("\n\n~~Ningun jugador tiene fichas para jugar~~");
+            printf("\n\n............{FIN DE JUEGO}...............");
+        }
+
         //condicion de terminar
-        if( verificarFinJuego(listaJugadores, listaMaso) ||  (noPusoFichas == nJugadores) && (turnoActual == nJugadores) ){
+        if( verificarFinJuego(listaJugadores, listaMaso) ){
             estadoJuego =  false;
             printf("\n\n............{FIN DE JUEGO}...............");
         }
