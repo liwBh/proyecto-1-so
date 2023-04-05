@@ -1,2 +1,4 @@
 Jugador:aaa, Puntos:0
 Jugador:bbb, Puntos:0
+Jugador:ccc, Puntos:0
+Jugador:ddd, Puntos:0

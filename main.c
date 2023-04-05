@@ -270,17 +270,17 @@ void *empezarJuego(){
          if(fichasAntes == fichasDespues){
             noPusoFichas++;
          }
-         
-        if(turnoActual==nJugadores){
-            turnoActual=0;
-            numeroRonda++;
-        }
 
         //condicion de terminar en caso que ninguno de los jugadores haya jugado
         if((noPusoFichas == nJugadores) && (turnoActual == nJugadores)){
             estadoJuego =  false;
             printf("\n\n~~Ningun jugador tiene fichas para jugar~~");
             printf("\n\n............{FIN DE JUEGO}...............");
+        }
+         
+        if(turnoActual==nJugadores){
+            turnoActual=0;
+            numeroRonda++;
         }
 
         //condicion de terminar
