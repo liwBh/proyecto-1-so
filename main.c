@@ -12,6 +12,7 @@ int turnoActual = 0;// control del turno de los hilos
 int numeroRonda = 0;// Control de rondas
 int nJugadores=0;// total de jugadores
 int fichasXjugador=0;//numero de fichas para cada jugador
+int noPusoFichas = 0;//numero de jugadores que no colocaron fichas
 bool estadoJuego = true; //bandera que va sostener el estado del juego
 
 pthread_t *hilosJugadores;//hilos cada jugador
@@ -251,6 +252,9 @@ void *empezarJuego(){
             nodoJugador = nodoJugador->sig;
         }
 
+        //contar las fichas del jugador antes de su turno
+        int fichasAntes = contarNumeroFichas(nodoJugador->listaFichasJugador);
+
         //crear y iniciar hilo jugador
         if (pthread_create(&(hilosJugadores[turnoActual]), NULL, &empezarTurno,(void *)nodoJugador) !=0 ){
             printf("Error al crear hilos\n");
@@ -259,13 +263,21 @@ void *empezarJuego(){
         pthread_join(hilosJugadores[turnoActual], NULL);
         turnoActual++;
 
+        //contar las fichas del jugador despues de su turno
+        int fichasDespues = contarNumeroFichas(nodoJugador->listaFichasJugador);
+
+        //comparacion de la cantidad de fichas antes de jugar y despues
+         if(fichasAntes == fichasDespues){
+            noPusoFichas++;
+         }
+         
         if(turnoActual==nJugadores){
             turnoActual=0;
             numeroRonda++;
         }
 
         //condicion de terminar
-        if( verificarFinJuego(listaJugadores, listaMaso) ){
+        if( verificarFinJuego(listaJugadores, listaMaso) ||  (noPusoFichas == nJugadores) && (turnoActual == nJugadores) ){
             estadoJuego =  false;
             printf("\n\n............{FIN DE JUEGO}...............");
         }

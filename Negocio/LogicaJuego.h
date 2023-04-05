@@ -10,6 +10,8 @@
 #include "../Listas/ListaMesa.h"
 
 
+int jugadorPoneFicha=0;
+
 int  calcularFichasXjugador( int nJugadores){
    return 28/ (nJugadores+1);
 }
@@ -314,9 +316,13 @@ void llenarListaPosibles(ListaPosibles  *listaPosibles, ListaMesa *listaMesa, Li
 //M
 int verificarFinJuego(ListaJugador *lista, ListaFichas *listaFichas){
     int flag = 0;
+
+    //si no hay fichas en el mazo para comer
     if(listaFichas->primero == NULL){
         NodoJugador *recorreJug = lista->primero;
         while(recorreJug != NULL){
+
+            //si un jugador no tiene fichas
             if(recorreJug->listaFichasJugador->primero == NULL){
                 flag = 1;
                 break;
@@ -324,6 +330,7 @@ int verificarFinJuego(ListaJugador *lista, ListaFichas *listaFichas){
             recorreJug = recorreJug->sig;
         }
     }
+
     return flag;
 }
 
