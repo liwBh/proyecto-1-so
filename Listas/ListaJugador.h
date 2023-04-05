@@ -238,12 +238,18 @@ NodoJugador *buscarPuntaGanador(ListaJugador *listaJugador){
     while (recorre != NULL) {
         if(recorre->puntos >= devolver->puntos){
             if(recorre->puntos == devolver->puntos){
-                //si tiene el mismo puntaje, gana el jugador con menos puntos
+                //si tiene el mismo puntaje, gana el jugador la cantidad de fichas que sumen menos puntos
                 int a = sumarFichasRestrantes(recorre->listaFichasJugador);
-                int b = sumarFichasRestrantes();
+                int b = sumarFichasRestrantes(devolver->listaFichasJugador);
+
+                if( a < b ){ // A tiene la menor cantidad en la sumatoria de fichas
+                    devolver = recorre;
+                }
+                //si no, B tiene la menor cantidad en la sumatoria de fichas, no se hace hace nada
 
             } else{
                 //es extrictamente mayor
+                devolver = recorre;
             }
         }
         recorre = recorre->sig;
@@ -251,7 +257,4 @@ NodoJugador *buscarPuntaGanador(ListaJugador *listaJugador){
     printf("\n***El nombre del ganador es: %s***",devolver->nombre);
     return devolver;
 }
-
-
-
 #endif //CLIONPROJECTS_LISTAJUGADOR_H
