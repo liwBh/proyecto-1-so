@@ -33,23 +33,24 @@ int isVacia(ListaMesa *lista){ //Metodo que verifica si la lista esta vacia
 }
 
 //realiza la accion de insertar un nodo extremo ficha
-void insertarExtremo(ListaMesa *lista, NodoMesa *nodo){ //Metodo de inserccion dentro de la lista
-
-    if(isVacia(lista)){
+void insertarExtremo(ListaMesa *lista, NodoMesa *nodo){
+    //Metodo de inserccion dentro de la lista
+    if(isVacia(lista)){//primer ficha par colocada
         lista->primero = nodo;
         lista->ultimo =  nodo;
-    }else{
+    }else{//si ya colocaron la primer ficha
         lista->ultimo->siguiente = nodo;
         nodo->anterior = lista->ultimo;
         lista->ultimo = nodo;
+
     }
 }
 
-void mostrarListaMesa(ListaMesa *lista){
+void mostrarListaMesa(ListaMesa *lista){ //Muestra la lista de mesa
     int nExtremo = 1;
     NodoMesa *nodo = lista->primero;
-    while(nodo != NULL){
-        mostrarNodoMesa(nodo, nExtremo);
+    while(nodo != NULL){ //Hace un recorrido
+        mostrarNodoMesa(nodo, nExtremo); //Va mostrando los nodos de la mesa
         nodo = nodo->siguiente;
         nExtremo++;
     }

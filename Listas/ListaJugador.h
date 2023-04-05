@@ -61,7 +61,7 @@ void metodoBurbujaMazoJugador(ListaJugador *listaJugador){
     }
 }
 
-//Valido cuantas dobles tiene cada jugador, pero problemas en el main
+//Valido cuantas dobles tiene cada jugador
 int validarDobles(ListaJugador *listaJugador){
 
 
@@ -74,13 +74,13 @@ int validarDobles(ListaJugador *listaJugador){
         int indice=0;
 
         while (nodoFicha1 != NULL){
-            if(nodoFicha1->a == nodoFicha1->b){
+            if(nodoFicha1->a == nodoFicha1->b){ //Cada vez que un jugador contenga una doble en su mazo entonces se incrementa
                 indice++;
             }
             nodoFicha1 = nodoFicha1->siguiente;
         }
 
-        if(indice >= 4){
+        if(indice >= 4){ //Si el incremente da 4 o mas entonces se retorna que tiene 4 o mas pares para revolver las fichas
             printf("\n\nEl jugador %s tiene 4 o mas pares, numero de pares: %d\n", nodo->nombre, indice);
             return 1;
         }
@@ -88,7 +88,7 @@ int validarDobles(ListaJugador *listaJugador){
         nodo = nodo->sig;
 
     }
-    return 0;
+    return 0; //Si el indice no llega a 4 en ningun jugador por lo tanto devuelve que no se encontraron 4 o mas pares
 }
 
 void mostrar(ListaJugador *lista){ //imprime la lista

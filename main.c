@@ -7,13 +7,13 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-
 //variables
 int turnoActual = 0;// control del turno de los hilos
 int numeroRonda = 0;// Control de rondas
 int nJugadores=0;// total de jugadores
 int fichasXjugador=0;//numero de fichas para cada jugador
 bool estadoJuego = true; //bandera que va sostener el estado del juego
+
 pthread_t *hilosJugadores;//hilos cada jugador
 pthread_t administrador; //hilo maestro que inicia el juego
 
@@ -21,7 +21,6 @@ ListaJugador *listaJugadores;//lista de jugadores
 ListaMesa *listaMesa;//lista de extremos disponibles para jugar
 ListaFichas *listaMaso;//crear maso de fichas
 ListaPosibles *listaPosibles;
-
 
 //funciones
 void crearListas();
@@ -33,7 +32,6 @@ void ordenarMostrarFichasJugador();
 void asignarOrdenJuego();
 void *empezarTurno(void *args);
 void *empezarJuego();
-
 
 int main() {
 
@@ -217,11 +215,10 @@ void *empezarTurno(void * args) {
 
     //SI es el primer turno
     if (turnoActual == 0 && isVacia(listaMesa)) {
-        printf("\n**Primer Ficha en Mesa**\n");
+
+        //coloca ficha
         jugarTurno(listaMesa, nodoJugador, listaPosibles,listaMaso);
-        mostrarListaMesa(listaMesa);
-        printf("\nFichas restantes del jugador: ");
-        imprimir(nodoJugador->listaFichasJugador);
+
     } else {
         //agregar todas las fichas que puede usar en el turno
         llenarListaPosibles(listaPosibles, listaMesa, nodoJugador->listaFichasJugador);
@@ -268,22 +265,10 @@ void *empezarJuego(){
         }
 
         //condicion de terminar
-        /*if( estaVacia(listaMaso ) && estaVacia(nodoJugador->listaFichasJugador)){
-            estadoJuego =  false;
-            printf("\n\n............{FIN DE JUEGO}...............");
-        } */
-
         if( verificarFinJuego(listaJugadores, listaMaso) ){
             estadoJuego =  false;
             printf("\n\n............{FIN DE JUEGO}...............");
         }
-
-        //el juego termina si no hay fichas para comer y el jugador no tiene fichas
-       /* if(numeroRonda >= 2){
-            estadoJuego =  false;
-            printf("\n\n............{FIN DE JUEGO}...............");
-        }  */
-
 
         sleep(2); //con esto pueden alterar la velocidad con que muestran las cosas
     }

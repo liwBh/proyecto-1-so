@@ -25,7 +25,8 @@ ListaPosibles *crearListaPosibles(){
     return listaPosibles;
 }
 
-int vaciaPosibles(ListaPosibles *lista){ //Metodo que verifica si la lista esta vacia
+int vaciaPosibles(ListaPosibles *lista){
+    //Metodo que verifica si la lista esta vacia
     if(lista->primero == NULL){
         return 1;
     }else{
@@ -55,16 +56,19 @@ void mostrarListaPosibles(ListaPosibles *lista){
 
 NodoPosibles *obtenerFichaJugar(ListaPosibles *lista){
     NodoPosibles *aux = lista->primero;
-    NodoPosibles *valor = crearNodoPosible(0,0,0,0);
-    int puntajeAlto = 0;
+    NodoPosibles *fichaMayorPts = crearNodoPosible(0,0,0,0,0);
+
     while (aux != NULL){
-        if(aux->nPuntos >= puntajeAlto && aux->a + aux->b > valor->a + valor->b) {
-            puntajeAlto = aux->nPuntos;
-            valor = crearNodoPosible(aux->nPuntos,aux->a,aux->b,aux->posicion);
+        if(aux->nPuntos > fichaMayorPts->nPuntos){
+            //Si la ficha actual tiene mas puntos que la anterior
+            fichaMayorPts = crearNodoPosible(aux->nPuntos,aux->a,aux->b,aux->posicion,aux->numeroRemplazar);
+        } else if( (aux->nPuntos == fichaMayorPts->nPuntos) && (aux->a + aux->b) > (fichaMayorPts->a + fichaMayorPts->b)){
+            //si son iguales en puntos, se da prioridad a la ficha mas alta
+            fichaMayorPts = crearNodoPosible(aux->nPuntos,aux->a,aux->b,aux->posicion,aux->numeroRemplazar);
         }
         aux = aux->siguiente;
     }
-    return valor;
+    return fichaMayorPts;
 }
 
 #endif //PROYECTO_01_SO_LISTAPOSIBLES_H

@@ -11,15 +11,17 @@ typedef struct NodoPosibles{
     int posicion;//0 = horizontal y 1 = vertical
     int a;
     int b;
+    int numeroRemplazar;
     struct NodoPosibles *siguiente;
     struct NodoPosibles *anterior;
 }NodoPosibles;
 
-NodoPosibles *crearNodoPosible(int nPuntos, int a, int b, int posicion){
+NodoPosibles *crearNodoPosible(int nPuntos, int a, int b, int posicion, int numeroRemplazar){
     NodoPosibles *nodo = malloc(sizeof(NodoPosibles));
     nodo->nPuntos = nPuntos;
     nodo->a = a;
     nodo->b = b;
+    nodo->numeroRemplazar = numeroRemplazar;
     nodo->posicion = posicion;
     nodo->siguiente = NULL;
     nodo->anterior = NULL;

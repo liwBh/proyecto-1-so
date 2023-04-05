@@ -21,7 +21,7 @@ ListaFichas *crearLista(){
     return lista; //Me devuelve una lista
 }
 
-int estaVacia(ListaFichas *lista){
+int estaVacia(ListaFichas *lista){ //Verifica si la lista esta vacia
     if(lista->primero == NULL){
         return 1;
     }else{
@@ -29,7 +29,7 @@ int estaVacia(ListaFichas *lista){
     }
 }
 
-void insertar(ListaFichas *lista, NodoFicha *nodo){
+void insertar(ListaFichas *lista, NodoFicha *nodo){ //Inserta un nodo dentro de la lista de fichas
     if(estaVacia(lista)){
         lista->primero = nodo;
         lista->ultimo = nodo;
@@ -40,7 +40,7 @@ void insertar(ListaFichas *lista, NodoFicha *nodo){
     }
 }
 
-void insertarFichas(ListaFichas *lista){
+void insertarFichas(ListaFichas *lista){ //Genera las fichas y las va insertando por medio de un ciclo
     NodoFicha *nodo;
     for(int i = 0; i <= 6; i++) {
         nodo = crearFicha(i,i);
@@ -80,11 +80,11 @@ void desordenar(ListaFichas *lista) {
     }
 }
 
-void agregarUnaFicha(ListaFichas *lista, NodoFicha *nodo){
+void agregarUnaFicha(ListaFichas *lista, NodoFicha *nodo){ //Agrega una sola ficha
     insertar(lista,nodo);
 }
 
-void repartirFichas(ListaFichas *lista, int fichasXjugador, ListaFichas *fichasJugador) {
+void repartirFichas(ListaFichas *lista, int fichasXjugador, ListaFichas *fichasJugador) { //Reparte fichas a cada jugador
 
     int i = 0;
     NodoFicha *aux = lista->primero;
@@ -122,6 +122,7 @@ void imprimir(ListaFichas *lista){ //imprime la lista
     printf("\n");
 }
 
+//Se recorre la lista para mostrar las fichas
 void mostrarMazoComer(ListaFichas *lista){
     NodoFicha *aux = lista->primero;
     while(aux != NULL){
@@ -158,15 +159,16 @@ NodoFicha *buscarFichaDoble(ListaFichas listaFichas) {
 
 
 
-void eliminarFichaJugada(ListaFichas *lista, NodoFicha *nodoEliminar){
+void eliminarFichaJugada(ListaFichas *lista, NodoFicha *nodoEliminar){ //ELimina un nodo (ficha) de una lista de fichas
 
-    if(estaVacia(lista)){
+    if(estaVacia(lista)){ //Primero se verifica que la lista no este vacia
         printf("La lista esta vacia");
-    }else{
-        NodoFicha *aux1 = lista->primero;
-        NodoFicha *aux2 = crearFicha(nodoEliminar->a,nodoEliminar->b);
+    }else{ //En caso de no estar vacia
+        NodoFicha *aux1 = lista->primero; //Un nodo que recorre la lista
+        NodoFicha *aux2 = crearFicha(nodoEliminar->a,nodoEliminar->b); //Clonamos la ficha a eliminar y se busca
 
         while (aux1 != NULL){
+            //Si la ficha a eliminar es la ultima igualamos las variables de la lista a NULL
             if((aux2->a == lista->ultimo->a) && (aux2->b == lista->ultimo->b) &&  (aux2->a == lista->primero->a) && (aux2->b == lista->primero->b)){
                 lista->primero = NULL;
                 lista->ultimo = NULL;

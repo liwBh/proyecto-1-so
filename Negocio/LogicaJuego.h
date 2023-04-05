@@ -31,7 +31,7 @@ int validarNJugadores(char input[50] ){
 
     if (entradaValida != 0) {
         //convertir a numerico
-        //entradaValida = atoi(input);
+
         entradaValida = (int) strtol(input,NULL,10);
 
 
@@ -43,20 +43,25 @@ int validarNJugadores(char input[50] ){
     return entradaValida;
 }
 
+//metodo que modifica y inserta nuevos extremos
 void actualizarListaMesa(ListaMesa *listaMesa, NodoPosibles *nodoPosibles){
 
     //recorrer la lista de mesa
     NodoMesa *nodoAux = listaMesa->primero;
     while(nodoAux != NULL){
 
-        if(nodoPosibles->a == nodoPosibles->b){// si la ficha seleccionada es par, modificar y agregar otro extremo
-            //Verificar si horizontal o vertical da mas puntos
-
+        if(nodoPosibles->a == nodoPosibles->b && nodoPosibles->posicion == 1 ){// si la ficha seleccionada es par, modificar y agregar otro extremo
+            //Verificar si la posicion es vertical da mas puntos
+            NodoMesa *nodoMesa = crearNodoMesa(nodoPosibles->b);
+            //Agrega un nuevo extremo
+            insertarExtremo(listaMesa, nodoMesa);
+            printf("\nAgregando un nuevo nodo\n");
+            break;
         }else{//si no es par, modificar un extremo
-            if(nodoAux->numero == nodoPosibles->a){//si el extremo disponible en mesa es igual al extremo a de la ficha
+            if( (nodoAux->numero == nodoPosibles->numeroRemplazar) && (nodoAux->numero == nodoPosibles->a) ){//si el extremo disponible en mesa es igual al extremo a de la ficha
                 nodoAux->numero = nodoPosibles->b;
                 break;
-            }else if(nodoAux->numero == nodoPosibles->b){//si el extremo disponible en mesa es igual al extremo b de la ficha
+            }else if( (nodoAux->numero == nodoPosibles->numeroRemplazar) && (nodoAux->numero == nodoPosibles->b)){//si el extremo disponible en mesa es igual al extremo b de la ficha
                 nodoAux->numero = nodoPosibles->a;
                 break;
             }
@@ -68,6 +73,7 @@ void actualizarListaMesa(ListaMesa *listaMesa, NodoPosibles *nodoPosibles){
 
 }
 
+//metodo que ordena las fichas del jugador
 void ordenarFichasJugador(ListaFichas *lista){
     NodoFicha *nodoActual = lista->primero; //Nodo que apunta al primero de la lista de fichas que tiene cada jugador
     while (nodoActual != NULL){ //Ciclo para recorrer la lista de las fichas de cada jugador
@@ -88,33 +94,52 @@ void ordenarFichasJugador(ListaFichas *lista){
     }
 }
 
+
+//metodo que elige la ficha que es colocada por el jugador
 NodoFicha *elegirFichaComer(ListaFichas *lista){
+    //Agarra el primero de la lista de fichas
     NodoFicha *devolver = crearFicha(lista->primero->a,lista->primero->b);
+    //Elimina la ficha de esa lista
     eliminarFichaJugada(lista,devolver);
     return devolver;
 }
 
-
+//Come la ficha por lo tanto se le agrega a la lista del jugador
 void comerFicha(NodoJugador *nodoJugador, NodoFicha *nodoComer){
 
+    //Si el jugador no tiene fichas y tiene que comer
     if(estaVacia(nodoJugador->listaFichasJugador)){
-        nodoJugador->listaFichasJugador = crearLista();
-        insertar(nodoJugador->listaFichasJugador,nodoComer);
-        ordenarFichasJugador(nodoJugador->listaFichasJugador);
+        nodoJugador->listaFichasJugador = crearLista(); //Se le crea una lista nuevamente
+        insertar(nodoJugador->listaFichasJugador,nodoComer); //Se le inserta el nodo que comio en lista nueva
+        ordenarFichasJugador(nodoJugador->listaFichasJugador); //Hace un metodo burbuja para acomodar las fichas de un jugador
     }else{
+        //Se pasan referencias para insertar el nodo que comio al inicio de la lista
         NodoFicha *aux = nodoJugador->listaFichasJugador->primero;
         nodoJugador->listaFichasJugador->primero = nodoComer;
         nodoComer->siguiente = aux;
         aux->anterior = nodoComer;
+        //Luego se ordenan las fichas de la lista
         ordenarFichasJugador(nodoJugador->listaFichasJugador);
     }
+}
+
+void imprimirDatosJugador(ListaMesa *lista, NodoJugador *nodoJugador){
+    //imprimir datos del jugador
+    printf("\n--------Datos del jugador-------- \n");
+    mostrarJugadores(nodoJugador);
+
+    //imprimir extremos en mesa
+    printf("\n--------Mesa------\n");
+    mostrarListaMesa(lista);
 }
 
 void jugarTurno(ListaMesa *lista, NodoJugador *nodoJugador, ListaPosibles *listaPosibles, ListaFichas *listaMaso){
 
     if( isVacia(lista) && nodoJugador->nTurno == 1){//si la lista esta vacia es el primero en jugar
+        printf("\n[Primer Ficha en Mesa]\n");
         //buscar el doble mas alto
         NodoFicha *parMasAlto = buscarFichaDoble( *nodoJugador->listaFichasJugador );
+        printf("\n*La ficha a colocar: [%d|%d]\n", parMasAlto->a, parMasAlto->b);
 
         //insertar ambos extremos en la listaMesa
         NodoMesa *nodoExtremo1  = crearNodoMesa(parMasAlto->a);
@@ -129,6 +154,9 @@ void jugarTurno(ListaMesa *lista, NodoJugador *nodoJugador, ListaPosibles *lista
 
         //eliminar ficha colocada de la lista del jugador
         eliminarFichaJugada(nodoJugador->listaFichasJugador, parMasAlto);
+
+        //imprimir datos del jugador
+        imprimirDatosJugador(lista, nodoJugador);
     } else{
 
         if(vaciaPosibles(listaPosibles)){//si no tiene fichas para jugar
@@ -142,16 +170,13 @@ void jugarTurno(ListaMesa *lista, NodoJugador *nodoJugador, ListaPosibles *lista
 
                 printf("\n--------Lista de comer despues de que el jugador -------- \n");
                 mostrarMazoComer(listaMaso);
+                printf("\n");
             }else{
                 printf("\nNo hay fichas para comer!\n");
             }
 
-            printf("\n\n--------Datos del jugador-------- \n");
-            mostrarJugadores(nodoJugador);
-
-            //imprimir extremos en mesa
-            printf("\n--------Mesa------\n");
-            mostrarListaMesa(lista);
+            //Imprimir datos del jugador
+            imprimirDatosJugador(lista, nodoJugador);
 
         }else{//si tiene fichas para jugar
             printf("\n*Posibles fichas para jugar el turno: ");
@@ -177,12 +202,7 @@ void jugarTurno(ListaMesa *lista, NodoJugador *nodoJugador, ListaPosibles *lista
                 eliminarFichaJugada(nodoJugador->listaFichasJugador, nodoEliminar);
 
                 //imprimir datos del jugador
-                printf("\n--------Datos del jugador-------- \n");
-                mostrarJugadores(nodoJugador);
-
-                //imprimir extremos en mesa
-                printf("\n--------Mesa------\n");
-                mostrarListaMesa(lista);
+                imprimirDatosJugador(lista, nodoJugador);
             }
         }
 
@@ -236,12 +256,12 @@ void agregarFichaConPuntaje(ListaPosibles *listaPosibles, ListaMesa *listaMesa, 
            //comparar cual es mas alto, el numero mas alto me dice que posicion colocar
             if( ptsVertical >  ptsHorizontal){
                 //si es vertical agrego ambos extremos
-                nodoPosibles = crearNodoPosible( ptsVertical,nodoFicha->a, nodoFicha->b,1);
+                nodoPosibles = crearNodoPosible( ptsVertical,nodoFicha->a, nodoFicha->b,1,0);
                 printf("Puede jugar vertical");
 
             }else{
                 //si es horizontal agrego 1 extremo
-                nodoPosibles = crearNodoPosible( ptsHorizontal,nodoFicha->a, nodoFicha->b,0);
+                nodoPosibles = crearNodoPosible( ptsHorizontal,nodoFicha->a, nodoFicha->b,0,nodoFicha->a);
                 printf("Puede jugar horizontal");
             }
 
@@ -255,7 +275,7 @@ void agregarFichaConPuntaje(ListaPosibles *listaPosibles, ListaMesa *listaMesa, 
 
             //agrego la ficha a listaPosible y nPuntaje
             //creo nodoMesa
-            NodoPosibles *nodoPosibles = crearNodoPosible( nPuntos,nodoFicha->a, nodoFicha->b,0);
+            NodoPosibles *nodoPosibles = crearNodoPosible( nPuntos,nodoFicha->a, nodoFicha->b,0,nodoFicha->a);
 
             //inserto nodo mesa
             insertarNodoPosible(listaPosibles,nodoPosibles);
@@ -268,7 +288,7 @@ void agregarFichaConPuntaje(ListaPosibles *listaPosibles, ListaMesa *listaMesa, 
 
             //agrego la ficha a listaPosible y nPuntaje
             //creo nodoMesa
-            NodoPosibles *nodoPosibles = crearNodoPosible( nPuntos,nodoFicha->a, nodoFicha->b,0);
+            NodoPosibles *nodoPosibles = crearNodoPosible( nPuntos,nodoFicha->a, nodoFicha->b,0,nodoFicha->b);
             //inserto nodo mesa
             insertarNodoPosible(listaPosibles,nodoPosibles);
         }
@@ -291,7 +311,7 @@ void llenarListaPosibles(ListaPosibles  *listaPosibles, ListaMesa *listaMesa, Li
     }
 }
 
-
+//M
 int verificarFinJuego(ListaJugador *lista, ListaFichas *listaFichas){
     int flag = 0;
     if(listaFichas->primero == NULL){
