@@ -257,7 +257,7 @@ NodoJugador *buscarPuntaGanador(ListaJugador *listaJugador){
         }
         recorre = recorre->sig;
     }
-    printf("\n***El nombre del ganador es: %s***",devolver->nombre);
+    printf("\n\n***El nombre del ganador es: %s***",devolver->nombre);
     return devolver;
 }
 #endif //CLIONPROJECTS_LISTAJUGADOR_H

@@ -9,9 +9,6 @@
 #include <ctype.h>
 #include "../Listas/ListaMesa.h"
 
-
-int jugadorPoneFicha=0;
-
 int  calcularFichasXjugador( int nJugadores){
    return 28/ (nJugadores+1);
 }

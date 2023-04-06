@@ -3,6 +3,7 @@
 #include "Listas/ListaJugador.h"
 #include "Listas/ListaFichas.h"
 #include "Negocio/LogicaJuego.h"
+#include "Sonidos/Sonido.h"
 #include <pthread.h>
 #include <unistd.h>
 #include <stdbool.h>
@@ -285,6 +286,7 @@ void *empezarJuego(){
 
             //buscar el jugador con el puntaje mas alto
             NodoJugador *jugadorGanador = buscarPuntaGanador(listaJugadores);
+            sonidoGanar();
 
             //crear archivo ganadores.txt
             //crearArchivo("../Archivos/ganadores.txt");
@@ -293,7 +295,7 @@ void *empezarJuego(){
 
             //registrar el jugador ganador y numero de victorias
             registrarPuntaje(jugadorGanador->nombre, jugadorGanador->puntos, contadorTurnos, 1);
-            
+
         }
 
         sleep(2); //con esto pueden alterar la velocidad con que muestran las cosas

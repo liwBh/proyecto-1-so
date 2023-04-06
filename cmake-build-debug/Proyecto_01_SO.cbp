@@ -24,6 +24,9 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/usr/include/gstreamer-1.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
@@ -43,6 +46,9 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/usr/include/gstreamer-1.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
@@ -92,6 +98,9 @@
 			<Option target="Proyecto_01_SO"/>
 		</Unit>
 		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/LogicaJuego.h">
+			<Option target="Proyecto_01_SO"/>
+		</Unit>
+		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/Sonido.h">
 			<Option target="Proyecto_01_SO"/>
 		</Unit>
 		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/main.c">
