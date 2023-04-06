@@ -1,35 +1,36 @@
-Jugador:aaa, Puntos:0
-Jugador:bbbb, Puntos:0
-Jugador:cccc, Puntos:0
-Jugador:ddd, Puntos:0
-Jugador:ddd, Puntos:0
-Jugador:aaa, Puntos:2
-Jugador:bbbb, Puntos:0
-Jugador:cccc, Puntos:0
-Jugador:ddd, Puntos:0
-Jugador:aaa, Puntos:2
-Jugador:bbbb, Puntos:0
-Jugador:cccc, Puntos:0
-Jugador:ddd, Puntos:0
-Jugador:aaa, Puntos:2
-Jugador:bbbb, Puntos:0
-Jugador:cccc, Puntos:2
-Jugador:ddd, Puntos:0
-Jugador:aaa, Puntos:4
-Jugador:bbbb, Puntos:0
-Jugador:cccc, Puntos:2
-Jugador:ddd, Puntos:0
-Jugador:aaa, Puntos:4
-Jugador:bbbb, Puntos:0
-Jugador:cccc, Puntos:2
-Jugador:ddd, Puntos:0
-Jugador:aaa, Puntos:4
-Jugador:bbbb, Puntos:1
-Jugador:cccc, Puntos:2
-Jugador:ddd, Puntos:0
-Jugador:aaa, Puntos:4
-Jugador:bbbb, Puntos:1
-Jugador:cccc, Puntos:2
-Jugador:ddd, Puntos:0
-Jugador:aaa, Puntos:4
-Jugador:bbbb, Puntos:1
+Jugador:Juan, Puntos:0, N° Turno:1
+Jugador:Pedro, Puntos:0, N° Turno:2
+Jugador:Juan, Puntos:2, N° Turno:3
+Jugador:Pedro, Puntos:0, N° Turno:4
+Jugador:Juan, Puntos:2, N° Turno:5
+Jugador:Pedro, Puntos:0, N° Turno:6
+Jugador:Juan, Puntos:3, N° Turno:7
+Jugador:Pedro, Puntos:2, N° Turno:8
+Jugador:Juan, Puntos:3, N° Turno:9
+Jugador:Pedro, Puntos:2, N° Turno:10
+Jugador:Juan, Puntos:3, N° Turno:11
+Jugador:Pedro, Puntos:2, N° Turno:12
+Jugador:Juan, Puntos:3, N° Turno:13
+Jugador:Pedro, Puntos:2, N° Turno:14
+Jugador:Juan, Puntos:3, N° Turno:15
+Jugador:Pedro, Puntos:2, N° Turno:16
+Jugador:Juan, Puntos:3, N° Turno:17
+Jugador:Pedro, Puntos:4, N° Turno:18
+Jugador:Juan, Puntos:3, N° Turno:19
+Jugador:Pedro, Puntos:4, N° Turno:20
+Jugador:Juan, Puntos:5, N° Turno:21
+Jugador:Pedro, Puntos:4, N° Turno:22
+Jugador:Juan, Puntos:5, N° Turno:23
+Jugador:Pedro, Puntos:4, N° Turno:24
+Jugador:Juan, Puntos:5, N° Turno:25
+Jugador:Pedro, Puntos:4, N° Turno:26
+Jugador:Juan, Puntos:5, N° Turno:27
+Jugador:Pedro, Puntos:4, N° Turno:28
+Jugador:Juan, Puntos:5, N° Turno:29
+Jugador:Pedro, Puntos:4, N° Turno:30
+Jugador:Juan, Puntos:5, N° Turno:31
+Jugador:Pedro, Puntos:4, N° Turno:32
+Jugador:Juan, Puntos:7, N° Turno:33
+
+
+El jugador ganador es: Juan, Puntos: 7

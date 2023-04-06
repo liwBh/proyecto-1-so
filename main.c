@@ -12,6 +12,7 @@ int turnoActual = 0;// control del turno de los hilos
 int numeroRonda = 0;// Control de rondas
 int nJugadores=0;// total de jugadores
 int fichasXjugador=0;//numero de fichas para cada jugador
+int contadorTurnos= 1;
 bool estadoJuego = true; //bandera que va sostener el estado del juego
 
 pthread_t *hilosJugadores;//hilos cada jugador
@@ -129,8 +130,6 @@ void iniciarJugadores(){
         NodoJugador *nodoJugador = crearJugador(nombreJugador, 0, 0);
         insertarJugador(listaJugadores, nodoJugador);
 
-        //escribir el nombre y puntaje en un archivo
-        acertarPuntos(nombreJugador, 0);
         printf("\n");
 
         //repartir fichas a jugador
@@ -268,6 +267,11 @@ void *empezarJuego(){
             numeroRonda++;
         }
 
+        //escribir el nombre y puntaje en un archivo
+        registrarPuntaje(nodoJugador->nombre, nodoJugador->puntos, contadorTurnos, 0);
+        contadorTurnos++;
+
+
         //verificar si hay algun jugador con fichas para colocar
         bool nadieJuega = verificarNoJugadas(listaJugadores, listaMaso, listaMesa);
 
@@ -282,19 +286,29 @@ void *empezarJuego(){
             //buscar el jugador con el puntaje mas alto
             NodoJugador *jugadorGanador = buscarPuntaGanador(listaJugadores);
 
-            //imprimir los puntajes de todos los jugadores desde el log.txt
-           // leerArchivo("log");
+            //crear archivo ganadores.txt
+            //crearArchivo("../Archivos/ganadores.txt");
+            //actualizar los puntajes de los jugadores
+            actualizarGanadores("../Archivos/ganadores.txt",jugadorGanador->nombre);
 
             //registrar el jugador ganador y numero de victorias
-
-
-
-            //imprimir podio
+            registrarPuntaje(jugadorGanador->nombre, jugadorGanador->puntos, contadorTurnos, 1);
+            
         }
 
         sleep(2); //con esto pueden alterar la velocidad con que muestran las cosas
-        acertarPuntos(nodoJugador->nombre, nodoJugador->puntos);
+
+
     }
+
+    //imprimir historial de partida
+    verHistorialJugadas();
+
+    getchar();
+    //Imprimi historial de los ganadores
+    verHistorialGanadores();
+
+    printf("\n                           Como arroz!!!!!!!!!!!!!!!!!!!!!!!\n");
 
     return 0;
 }

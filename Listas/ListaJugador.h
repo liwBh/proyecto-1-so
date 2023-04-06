@@ -219,22 +219,25 @@ void obtenerFichaDoble(ListaJugador *lista,int nJugadores) {
 int sumarFichasRestrantes(ListaFichas *listaFichas){
     int sumatoria = 0;
 
+    //recorre la lista de fichas de un jugador
     if(listaFichas->primero != NULL){
         NodoFicha *recorre = listaFichas->primero;
         while (recorre != NULL) {
+            //Hacer una suma de las fichas restantes del jugador
             sumatoria += (recorre->a + recorre->b);
             recorre = recorre->siguiente;
         }
     }
 
-    return sumatoria;
+    return sumatoria; //Retorna la suma de las fichas
 }
 
 NodoJugador *buscarPuntaGanador(ListaJugador *listaJugador){
+    //buscar el jugador ganador
     NodoJugador *recorre = listaJugador->primero;
     NodoJugador *devolver = crearJugador(recorre->nombre,recorre->puntos,recorre->nTurno);
 
-
+    //
     while (recorre != NULL) {
         if(recorre->puntos >= devolver->puntos){
             if(recorre->puntos == devolver->puntos){

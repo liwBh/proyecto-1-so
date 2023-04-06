@@ -209,13 +209,4 @@ void eliminarFichaJugada(ListaFichas *lista, NodoFicha *nodoEliminar){ //ELimina
     }
 }
 
-int contarNumeroFichas(ListaFichas *lista){
-    int contador=0;
-    NodoFicha *recorre =  lista->primero;
-    while (recorre != NULL) {
-        contador++;
-        recorre = recorre->siguiente;
-    }
-    return contador;
-}
 #endif //PRUEBAS_LISTAFICHAS_H
