@@ -223,7 +223,7 @@ void *empezarTurno(void * args) {
     //inicializando datos del jugdor
     NodoJugador *nodoJugador = (NodoJugador *) args;
 
-    printf("\n****Numero de turno: %d ****\n", (turnoActual + 1));
+    printf("\n\n****Numero de turno: %d ****\n", (turnoActual + 1));
 
     //SI es el primer turno
     if (turnoActual == 0 && isVacia(listaMesa)) {
@@ -239,7 +239,7 @@ void *empezarTurno(void * args) {
         jugarTurno(listaMesa, nodoJugador, listaPosibles, listaMaso);
 
     }
-
+                                                                                                                             
     return 0;
 }
 
@@ -291,7 +291,7 @@ void *empezarJuego(){
             if(nadieJuega){
                 printf("\n\n~~Ningun jugador tiene fichas para jugar~~");
             }
-            printf("\n\n............{FIN DE JUEGO}...............");
+            printf("\n\n...............{FIN DE JUEGO}...............");
 
             //buscar el jugador con el puntaje mas alto
             NodoJugador *jugadorGanador = buscarPuntaGanador(listaJugadores);

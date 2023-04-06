@@ -68,12 +68,14 @@ int registrarPuntaje(char nombreJugador[50], int puntos, int contadorTurnos, int
 }
 
 //metodo que permite la lectura de un archivo
-void leerArchivo( char* nombre ){
+void leerArchivo( char* ruta ){
 
     char texto[5000];
+    //inicializar el array
+    memset(texto, '\0', sizeof(texto));
 
     //inicializa archivo modo lectura
-    FILE *archivo = fopen(nombre, "r");
+    FILE *archivo = fopen(ruta, "r");
 
     //validar que el archivo existe
     if( archivo == NULL ){
@@ -106,10 +108,13 @@ void leerArchivo( char* nombre ){
     //mensaje de exito
     //printf("\nEl archivo fue leido de forma exitosa!\n");
 
+
     //cerrar archivo
     fclose(archivo);
+
 }
 
+//metodo que permite la lectura de un archivo
  void actualizarGanadores(char* ruta, char* nombre) {
      // Abrir el archivo en modo lectura/escritura
      FILE* fp = fopen(ruta, "r+");
