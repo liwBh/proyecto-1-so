@@ -1,2 +1,0 @@
-Jugador:wil, Puntos:0
-Jugador:elmer, Puntos:0

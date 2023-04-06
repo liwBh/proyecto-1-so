@@ -69,6 +69,17 @@ int main() {
     pthread_join(administrador, NULL); //se sincroniza
 
 
+    printf("\n");
+    //imprimir historial de partida
+    verHistorialJugadas();
+
+    getchar();
+    //Imprimi historial de los ganadores
+    verHistorialGanadores();
+
+    printf("\n                           Como arroz!!!!!!!!!!!!!!!!!!!!!!!\n");
+
+
     //pthread_exit(NULL);// destruye los hilos
     return 0;
 }
@@ -89,6 +100,7 @@ void iniciarMazo(){
 
     //revolver el maso
     printf("\n Revolviendo el maso de fichas\n");
+    reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/revolverFichas.wav");
     desordenar(listaMaso);
     imprimir(listaMaso);
 }
@@ -228,8 +240,6 @@ void *empezarTurno(void * args) {
 
     }
 
-    printf("\n");
-
     return 0;
 }
 
@@ -260,7 +270,6 @@ void *empezarJuego(){
         pthread_join(hilosJugadores[turnoActual], NULL);
         turnoActual++;
 
-        //escribir en el archivo log el punteje
 
         //reseteo de turno y numero de ronda
         if(turnoActual==nJugadores){
@@ -286,7 +295,7 @@ void *empezarJuego(){
 
             //buscar el jugador con el puntaje mas alto
             NodoJugador *jugadorGanador = buscarPuntaGanador(listaJugadores);
-            sonidoGanar();
+            reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/victoria.wav");
 
             //crear archivo ganadores.txt
             //crearArchivo("../Archivos/ganadores.txt");
@@ -303,14 +312,6 @@ void *empezarJuego(){
 
     }
 
-    //imprimir historial de partida
-    verHistorialJugadas();
-
-    getchar();
-    //Imprimi historial de los ganadores
-    verHistorialGanadores();
-
-    printf("\n                           Como arroz!!!!!!!!!!!!!!!!!!!!!!!\n");
 
     return 0;
 }

@@ -1,4 +1,2 @@
-Juan,3
-Mario,1
-Marlon,1
-Junnior,1
+Juan,1
+Berto,1

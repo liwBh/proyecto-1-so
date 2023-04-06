@@ -8,7 +8,7 @@
 
 
 int crearArchivo(char* ruta){
-
+    //"playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/victoria.wav"
     // usando el modo w crea el archivo, si ya hay uno con ese nombre lo sobre escribe "../Archivos/log.txt"
     FILE *archivo = fopen(ruta, "w");
 

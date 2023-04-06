@@ -80,7 +80,7 @@ CMakeFiles/Proyecto_01_SO.dir/main.c.o: \
  /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Listas/ListaPosibles.h \
  /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Listas/NodoPosibles.h \
  /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Listas/ListaMesa.h \
- /home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/Sonido.h \
+ /home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/../Sonidos/Sonido.h \
  /usr/include/gstreamer-1.0/gst/gst.h /usr/include/glib-2.0/glib.h \
  /usr/include/glib-2.0/glib/galloca.h /usr/include/glib-2.0/glib/gtypes.h \
  /usr/lib/x86_64-linux-gnu/glib-2.0/include/glibconfig.h \
@@ -287,4 +287,5 @@ CMakeFiles/Proyecto_01_SO.dir/main.c.o: \
  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
+ /home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/Sonido.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h
