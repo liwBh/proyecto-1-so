@@ -1,3 +1,3 @@
-/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/CMakeFiles/Proyecto_01_SO.dir
-/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/CMakeFiles/Proyecto_01_SO.dir
+/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/CMakeFiles/rebuild_cache.dir

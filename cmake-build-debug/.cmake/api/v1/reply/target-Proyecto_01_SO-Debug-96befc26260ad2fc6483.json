@@ -10,9 +10,7 @@
 	{
 		"commands" : 
 		[
-			"add_executable",
-			"target_link_libraries",
-			"include_directories"
+			"add_executable"
 		],
 		"files" : 
 		[
@@ -25,18 +23,6 @@
 			},
 			{
 				"command" : 0,
-				"file" : 0,
-				"line" : 12,
-				"parent" : 0
-			},
-			{
-				"command" : 1,
-				"file" : 0,
-				"line" : 14,
-				"parent" : 0
-			},
-			{
-				"command" : 2,
 				"file" : 0,
 				"line" : 8,
 				"parent" : 0
@@ -53,21 +39,6 @@
 				},
 				{
 					"fragment" : "-std=gnu11"
-				}
-			],
-			"includes" : 
-			[
-				{
-					"backtrace" : 3,
-					"path" : "/usr/include/gstreamer-1.0"
-				},
-				{
-					"backtrace" : 3,
-					"path" : "/usr/include/glib-2.0"
-				},
-				{
-					"backtrace" : 3,
-					"path" : "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
 				}
 			],
 			"language" : "C",
@@ -97,21 +68,6 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "-lgstreamer-1.0",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "-lgobject-2.0",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "-lglib-2.0",
-				"role" : "libraries"
 			}
 		],
 		"language" : "C"
@@ -141,8 +97,7 @@
 				3,
 				4,
 				5,
-				6,
-				7
+				6
 			]
 		}
 	],
@@ -182,11 +137,6 @@
 		{
 			"backtrace" : 1,
 			"path" : "Listas/NodoPosibles.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Sonidos/Sonido.h",
 			"sourceGroupIndex" : 1
 		}
 	],

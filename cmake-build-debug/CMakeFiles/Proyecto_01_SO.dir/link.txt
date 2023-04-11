@@ -1,1 +1,1 @@
-/usr/bin/cc -g CMakeFiles/Proyecto_01_SO.dir/main.c.o -o Proyecto_01_SO  -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 
+/usr/bin/cc -g CMakeFiles/Proyecto_01_SO.dir/main.c.o -o Proyecto_01_SO 

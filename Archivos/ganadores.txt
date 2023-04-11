@@ -3,6 +3,10 @@ Berto,1
 wil,1
 Wil,1
 Bill,1
-Elmer,5
-Manuel,1
-Miguel,1
+Elmer,1
+Fer,1
+Jose,1
+Morsa,1
+Ligia,1
+gfg,1
+Jurguen,2

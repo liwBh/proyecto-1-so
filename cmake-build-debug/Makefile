@@ -57,10 +57,10 @@ RM = /snap/clion/234/bin/cmake/linux/x64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/liwbh/CLionProjects/Proyecto-01-SO
+CMAKE_SOURCE_DIR = /home/jurguen/Documentos/GitHub/proyecto-1-so
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug
+CMAKE_BINARY_DIR = /home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/CMakeFiles /home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/CMakeFiles /home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

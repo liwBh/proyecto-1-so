@@ -8,105 +8,96 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug"/>
+				<Option working_dir="/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Proyecto_01_SO">
-				<Option output="/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Proyecto_01_SO" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug"/>
+				<Option output="/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Proyecto_01_SO" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/usr/include/gstreamer-1.0"/>
-					<Add directory="/usr/include/glib-2.0"/>
-					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 Proyecto_01_SO"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 Proyecto_01_SO"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Proyecto_01_SO/fast">
-				<Option output="/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Proyecto_01_SO" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug"/>
+				<Option output="/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Proyecto_01_SO" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/usr/include/gstreamer-1.0"/>
-					<Add directory="/usr/include/glib-2.0"/>
-					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
 					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 Proyecto_01_SO/fast"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 Proyecto_01_SO/fast"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug"/>
+				<Option working_dir="/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug"/>
+				<Option working_dir="/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/liwbh/CLionProjects/Proyecto-01-SO/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/jurguen/Documentos/GitHub/proyecto-1-so/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Archivos/Archivo.h">
+		<Unit filename="/home/jurguen/Documentos/GitHub/proyecto-1-so/Archivos/Archivo.h">
 			<Option target="Proyecto_01_SO"/>
 		</Unit>
-		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Listas/ListaMesa.h">
+		<Unit filename="/home/jurguen/Documentos/GitHub/proyecto-1-so/Listas/ListaMesa.h">
 			<Option target="Proyecto_01_SO"/>
 		</Unit>
-		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Listas/ListaPosibles.h">
+		<Unit filename="/home/jurguen/Documentos/GitHub/proyecto-1-so/Listas/ListaPosibles.h">
 			<Option target="Proyecto_01_SO"/>
 		</Unit>
-		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Listas/NodoMesa.h">
+		<Unit filename="/home/jurguen/Documentos/GitHub/proyecto-1-so/Listas/NodoMesa.h">
 			<Option target="Proyecto_01_SO"/>
 		</Unit>
-		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Listas/NodoPosibles.h">
+		<Unit filename="/home/jurguen/Documentos/GitHub/proyecto-1-so/Listas/NodoPosibles.h">
 			<Option target="Proyecto_01_SO"/>
 		</Unit>
-		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Negocio/LogicaJuego.h">
+		<Unit filename="/home/jurguen/Documentos/GitHub/proyecto-1-so/Negocio/LogicaJuego.h">
 			<Option target="Proyecto_01_SO"/>
 		</Unit>
-		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/Sonido.h">
+		<Unit filename="/home/jurguen/Documentos/GitHub/proyecto-1-so/main.c">
 			<Option target="Proyecto_01_SO"/>
 		</Unit>
-		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/main.c">
-			<Option target="Proyecto_01_SO"/>
-		</Unit>
-		<Unit filename="/home/liwbh/CLionProjects/Proyecto-01-SO/CMakeLists.txt">
+		<Unit filename="/home/jurguen/Documentos/GitHub/proyecto-1-so/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

@@ -3,7 +3,6 @@
 #include "Listas/ListaJugador.h"
 #include "Listas/ListaFichas.h"
 #include "Negocio/LogicaJuego.h"
-#include "Sonidos/Sonido.h"
 #include <pthread.h>
 #include <unistd.h>
 #include <stdbool.h>
@@ -50,7 +49,7 @@ int main() {
     ingresarNumeroJugadores();
 
     //crear archivo log.txt
-    crearArchivo("../Archivos/log.txt");
+    crearArchivo("Archivos/log.txt");
 
     //Iniciar jugadores - nombre y lista de ficha
     iniciarJugadores();
@@ -100,7 +99,6 @@ void iniciarMazo(){
 
     //revolver el maso
     printf("\n Revolviendo el maso de fichas\n");
-    reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/revolverFichas.wav");
     desordenar(listaMaso);
     imprimir(listaMaso);
 }
@@ -161,8 +159,7 @@ void validarNumeroPares(){
     if( validarDobles(listaJugadores) ){
         do{
             printf("\n\nRevolviendo el maso de fichas ...");
-            reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/revolverFichas.wav");
-            sleep(2);
+            sleep(3);
 
             // reiniciar la lista de maso
             listaMaso = crearLista();
@@ -183,8 +180,12 @@ void validarNumeroPares(){
 
         }while( validarDobles(listaJugadores) != 0);
 
+        //********************************
         ordenarMostrarFichasJugador();
+        //********************************
     }
+
+
 }
 
 void ordenarMostrarFichasJugador(){
@@ -292,12 +293,11 @@ void *empezarJuego(){
 
             //buscar el jugador con el puntaje mas alto
             NodoJugador *jugadorGanador = buscarPuntaGanador(listaJugadores);
-            reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/victoria.wav");
 
             //crear archivo ganadores.txt
             //crearArchivo("../Archivos/ganadores.txt");
             //actualizar los puntajes de los jugadores
-            actualizarGanadores("../Archivos/ganadores.txt",jugadorGanador->nombre);
+            actualizarGanadores("Archivos/ganadores.txt",jugadorGanador->nombre);
 
             //registrar el jugador ganador y numero de victorias
             registrarPuntaje(jugadorGanador->nombre, jugadorGanador->puntos, contadorTurnos, 1);
@@ -305,6 +305,7 @@ void *empezarJuego(){
         }
 
         sleep(2); //con esto pueden alterar la velocidad con que muestran las cosas
+
 
     }
 
