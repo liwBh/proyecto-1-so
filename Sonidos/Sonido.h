@@ -8,13 +8,6 @@
 #include <stdio.h>
 #include <gst/gst.h>
 
-/*
-
-sudo apt-get update
-sudo apt-get install libgstreamer1.0-dev
-sudo apt-get install gstreamer1.0-plugins-bad
-
-*/
 
 void reproducirSonido(char* ruta){
 
@@ -25,9 +18,30 @@ void reproducirSonido(char* ruta){
     /* Initialize GStreamer */
     gst_init (NULL, NULL);
 
-    /* Create the elements */
-    //pipeline = gst_parse_launch ("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/victoria.wav", NULL);
-    pipeline = gst_parse_launch (ruta, NULL);
+
+
+    char *currentDir = g_get_current_dir();//ruta del proyecto
+    char newFilePath[200];//variable para depurar la ruta del proyecto
+    char rutaAbsoluta[200];//variable para la ruta absoluta
+    char *subStr = "/cmake-build-debug";//cadena a eliminar
+    char *pos = strstr(currentDir, subStr);
+
+    //manejo de errores al depurar la cadena de la ruta
+    if (pos != NULL) {
+        strncpy(newFilePath, currentDir, pos - currentDir);
+        newFilePath[pos - currentDir] = '\0';
+        strcat(newFilePath, pos + strlen(subStr));
+    } else {
+        strcpy(newFilePath, currentDir);
+    }
+
+    //armando la ruta absoluta
+    strcat(rutaAbsoluta,"playbin uri=file:////");
+    strcat(rutaAbsoluta,newFilePath);
+    strcat(rutaAbsoluta,ruta);
+
+
+    pipeline = gst_parse_launch(rutaAbsoluta, NULL);
 
     /* Start playing */
     gst_element_set_state (pipeline, GST_STATE_PLAYING);

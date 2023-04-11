@@ -141,7 +141,7 @@ void jugarTurno(ListaMesa *lista, NodoJugador *nodoJugador, ListaPosibles *lista
         //buscar el doble mas alto
         NodoFicha *parMasAlto = buscarFichaDoble( *nodoJugador->listaFichasJugador );
         printf("\n*La ficha a colocar: [%d|%d]\n", parMasAlto->a, parMasAlto->b);
-        reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/ponerFicha.wav");
+        reproducirSonido("/Sonidos/ponerFicha.wav");
 
         //insertar ambos extremos en la listaMesa
         NodoMesa *nodoExtremo1  = crearNodoMesa(parMasAlto->a);
@@ -167,7 +167,7 @@ void jugarTurno(ListaMesa *lista, NodoJugador *nodoJugador, ListaPosibles *lista
             if(!estaVacia(listaMaso)){
                 NodoFicha *fichaComerJugador  = elegirFichaComer(listaMaso);
 
-                reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/comerFicha.wav");
+                reproducirSonido("/Sonidos/comerFicha.wav");
                 printf("\nLa ficha comida es: [%d|%d]\n", fichaComerJugador->a, fichaComerJugador->b);
                 comerFicha(nodoJugador, fichaComerJugador);
 
@@ -188,7 +188,7 @@ void jugarTurno(ListaMesa *lista, NodoJugador *nodoJugador, ListaPosibles *lista
             //buscar la ficha con el puntaje mas alto y con la suma de sus extremos que sea menor
             NodoPosibles *fichaJugar = obtenerFichaJugar(listaPosibles);
             printf("\n\n*La ficha a colocar: [%d|%d]\n", fichaJugar->a, fichaJugar->b);
-            reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/ponerFicha.wav");
+            reproducirSonido("/Sonidos/ponerFicha.wav");
 
             if(estaVacia(nodoJugador->listaFichasJugador)){//si es la ultima ficha
                 printf("El jugador coloco su ultima!");

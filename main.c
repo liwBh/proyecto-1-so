@@ -100,7 +100,8 @@ void iniciarMazo(){
 
     //revolver el maso
     printf("\n Revolviendo el maso de fichas\n");
-    reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/revolverFichas.wav");
+   // reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/revolverFichas.wav");
+    reproducirSonido("/Sonidos/revolverFichas.wav");
     desordenar(listaMaso);
     imprimir(listaMaso);
 }
@@ -161,7 +162,7 @@ void validarNumeroPares(){
     if( validarDobles(listaJugadores) ){
         do{
             printf("\n\nRevolviendo el maso de fichas ...");
-            reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/revolverFichas.wav");
+            reproducirSonido("/Sonidos/revolverFichas.wav");
             sleep(2);
 
             // reiniciar la lista de maso
@@ -292,7 +293,7 @@ void *empezarJuego(){
 
             //buscar el jugador con el puntaje mas alto
             NodoJugador *jugadorGanador = buscarPuntaGanador(listaJugadores);
-            reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/victoria.wav");
+            reproducirSonido("/Sonidos/victoria.wav");
 
             //crear archivo ganadores.txt
             //crearArchivo("../Archivos/ganadores.txt");
