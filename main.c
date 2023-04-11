@@ -161,7 +161,8 @@ void validarNumeroPares(){
     if( validarDobles(listaJugadores) ){
         do{
             printf("\n\nRevolviendo el maso de fichas ...");
-            sleep(3);
+            reproducirSonido("playbin uri=file:////home/liwbh/CLionProjects/Proyecto-01-SO/Sonidos/revolverFichas.wav");
+            sleep(2);
 
             // reiniciar la lista de maso
             listaMaso = crearLista();
@@ -182,12 +183,8 @@ void validarNumeroPares(){
 
         }while( validarDobles(listaJugadores) != 0);
 
-        //********************************
         ordenarMostrarFichasJugador();
-        //********************************
     }
-
-
 }
 
 void ordenarMostrarFichasJugador(){
@@ -308,7 +305,6 @@ void *empezarJuego(){
         }
 
         sleep(2); //con esto pueden alterar la velocidad con que muestran las cosas
-
 
     }
 
