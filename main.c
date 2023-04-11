@@ -295,14 +295,13 @@ void *empezarJuego(){
             NodoJugador *jugadorGanador = buscarPuntaGanador(listaJugadores);
             reproducirSonido("/Sonidos/victoria.wav");
 
+            //registrar el jugador ganador y numero de victorias
+            registrarPuntaje(jugadorGanador->nombre, jugadorGanador->puntos, contadorTurnos, 1);
+
             //crear archivo ganadores.txt
             //crearArchivo("../Archivos/ganadores.txt");
             //actualizar los puntajes de los jugadores
             actualizarGanadores("../Archivos/ganadores.txt",jugadorGanador->nombre);
-
-            //registrar el jugador ganador y numero de victorias
-            registrarPuntaje(jugadorGanador->nombre, jugadorGanador->puntos, contadorTurnos, 1);
-
         }
 
         sleep(2); //con esto pueden alterar la velocidad con que muestran las cosas
