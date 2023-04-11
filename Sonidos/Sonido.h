@@ -23,6 +23,8 @@ void reproducirSonido(char* ruta){
     char *currentDir = g_get_current_dir();//ruta del proyecto
     char newFilePath[200];//variable para depurar la ruta del proyecto
     char rutaAbsoluta[200];//variable para la ruta absoluta
+    memset(newFilePath, '\0', sizeof(newFilePath));
+    memset(rutaAbsoluta, '\0', sizeof(rutaAbsoluta));
     char *subStr = "/cmake-build-debug";//cadena a eliminar
     char *pos = strstr(currentDir, subStr);
 
