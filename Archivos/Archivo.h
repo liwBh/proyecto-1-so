@@ -37,7 +37,7 @@ int crearArchivo(char* ruta){
 int registrarPuntaje(char nombreJugador[50], int puntos, int contadorTurnos, int ganador){
 
     //inicializar archivo, modo agregar
-    FILE *archivo = fopen("../Archivos/log.txt", "a");
+    FILE *archivo = fopen("Archivos/log.txt", "a");
 
     //validar si el archivo existe
     if(archivo == NULL) {
@@ -161,7 +161,7 @@ void verHistorialJugadas(){
     scanf("%c", &input);
     if(input == ' ') {
         printf("\n\n............{Historial de puntos}...............\n\n");
-        leerArchivo("../Archivos/log.txt");
+        leerArchivo("Archivos/log.txt");
     }
 
 }
@@ -172,7 +172,7 @@ void verHistorialGanadores(){
     scanf("%c", &input2);
     if(input2 == ' ') {
         printf("\n\n............{Historial de Ganadores}...............\n\n");
-        leerArchivo("../Archivos/ganadores.txt");
+        leerArchivo("Archivos/ganadores.txt");
     }
 
 }

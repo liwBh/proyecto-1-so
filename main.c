@@ -50,7 +50,7 @@ int main() {
     ingresarNumeroJugadores();
 
     //crear archivo log.txt
-    crearArchivo("../Archivos/log.txt");
+    crearArchivo("Archivos/log.txt");
 
     //Iniciar jugadores - nombre y lista de ficha
     iniciarJugadores();
@@ -298,7 +298,7 @@ void *empezarJuego(){
             //crear archivo ganadores.txt
             //crearArchivo("../Archivos/ganadores.txt");
             //actualizar los puntajes de los jugadores
-            actualizarGanadores("../Archivos/ganadores.txt",jugadorGanador->nombre);
+            actualizarGanadores("Archivos/ganadores.txt",jugadorGanador->nombre);
 
             //registrar el jugador ganador y numero de victorias
             registrarPuntaje(jugadorGanador->nombre, jugadorGanador->puntos, contadorTurnos, 1);
