@@ -1,9 +1,9 @@
 Juan,1
 Berto,1
 wil,1
-Wil,4
+Wil,5
 Bill,1
-Elmer,5
+Elmer,6
 Manuel,2
 Miguel,1
 Jurguen,1
